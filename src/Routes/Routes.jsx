@@ -7,7 +7,8 @@ import AllProducts from "../Pages/AllProducts/AllProducts";
 import ProductDetails from "../Pages/ProductDetails/ProductDetails";
 import MyExports from "../Pages/MyExports/MyExports";
 import MyImports from "../Pages/MyImports/MyImports";
-import AddExport from "../Pages/AddExport/AddExport";
+import AddProduct from "../Pages/AddProduct/AddProduct";
+import PrivateRoutes from "./PrivateRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -24,19 +25,35 @@ export const router = createBrowserRouter([
       },
       {
         path: "allProducts/:id",
-        Component: ProductDetails,
+        element: (
+          <PrivateRoutes>
+            <ProductDetails></ProductDetails>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "myExports",
-        Component: MyExports,
+        element: (
+          <PrivateRoutes>
+            <MyExports></MyExports>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "myImports",
-        Component: MyImports,
+        element: (
+          <PrivateRoutes>
+            <MyImports></MyImports>
+          </PrivateRoutes>
+        ),
       },
       {
-        path: "addExport",
-        Component: AddExport,
+        path: "addProduct",
+        element: (
+          <PrivateRoutes>
+            <AddProduct></AddProduct>
+          </PrivateRoutes>
+        ),
       },
       {
         path: "register",

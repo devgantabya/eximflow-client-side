@@ -103,7 +103,7 @@ const Navbar = () => {
 
           <li onClick={() => setMenuOpen(false)}>
             <NavLink
-              to="/addExport"
+              to="/addProduct"
               className={({ isActive }) =>
                 `px-3 py-2 font-medium transition-colors duration-200 ${
                   isActive
@@ -112,7 +112,7 @@ const Navbar = () => {
                 }`
               }
             >
-              Add Export
+              Add Product
             </NavLink>
           </li>
         </>
