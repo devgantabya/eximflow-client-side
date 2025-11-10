@@ -9,11 +9,13 @@ import MyExports from "../Pages/MyExports/MyExports";
 import MyImports from "../Pages/MyImports/MyImports";
 import AddProduct from "../Pages/AddProduct/AddProduct";
 import PrivateRoutes from "./PrivateRoutes";
+import NotFound from "./../Pages/NotFound/NotFound";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: Root,
+    errorElement: <NotFound></NotFound>,
     children: [
       {
         index: true,
@@ -25,8 +27,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "productDetails/:id",
-        loader: ({ params }) =>
-          fetch(`http://localhost:5000/products/${params.id}`),
+
+        loader: async ({ params }) => {
+          const res = await fetch(
+            `http://localhost:5000/products/${params.id}`
+          );
+
+          if (!res.ok) return null;
+
+          const product = await res.json();
+
+          return product || null;
+        },
+
         element: (
           <PrivateRoutes>
             <ProductDetails></ProductDetails>

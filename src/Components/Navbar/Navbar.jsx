@@ -158,7 +158,7 @@ const Navbar = () => {
             </svg>
           </button>
 
-          <Link to="/" className="text-2xl font-bold tracking-wide">
+          <Link to="/" className="text-3xl font-extrabold tracking-wide">
             Exim<span className="text-primary">Flow</span>
           </Link>
         </div>

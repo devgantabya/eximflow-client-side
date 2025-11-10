@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { useLoaderData, useNavigate } from "react-router";
+import { Link, useLoaderData, useNavigate } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { toast } from "react-toastify";
+import productNotFoundImg from "../../assets/item-not-found.webp";
 
 const ProductDetails = () => {
   const loadedProduct = useLoaderData();
-  const [product, setProduct] = useState(loadedProduct);
+  const [product, setProduct] = useState(loadedProduct || null);
   const { user } = useContext(AuthContext);
   const importModalRef = useRef(null);
   const [importQty, setImportQty] = useState("");
@@ -108,9 +109,26 @@ const ProductDetails = () => {
 
   if (!product)
     return (
-      <div className="text-center mt-20 text-3xl font-semibold text-gray-500">
-        Product not found 😢
-      </div>
+      <main className="grow flex justify-center items-center bg-linear-to-r from-blue-100 to-blue-50 px-4 py-12 md:py-20">
+        <div className="text-center">
+          <img
+            src={productNotFoundImg}
+            alt="404 - Product Not Found"
+            className="mx-auto max-w-sm w-full"
+          />
+          <div className="text-center py-10">
+            <h1 className="text-4xl font-bold text-gray-800 mb-2">
+              Oops, product <span className="text-primary">not found!</span>
+            </h1>
+            <p className="text-gray-600">
+              We could not find the product you requested.
+            </p>
+          </div>
+          <Link to="/allProducts" className="btn btn-primary btn-sm md:btn-md">
+            Back To Store
+          </Link>
+        </div>
+      </main>
     );
 
   return (
