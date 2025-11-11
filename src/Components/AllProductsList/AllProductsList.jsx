@@ -2,8 +2,10 @@ import React, { use, useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import Product from "../Product/Product";
 import Loader from "../../Components/Loader/Loader";
+import { ProductsContext } from "../../contexts/ProductsContext/ProductsContext";
 
 const AllProductsList = ({ allProductsPromise }) => {
+  const { products } = use(ProductsContext);
   const productsData = use(allProductsPromise);
 
   const [searchInputValue, setSearchInputValue] = useState("");
@@ -20,7 +22,7 @@ const AllProductsList = ({ allProductsPromise }) => {
       setLoading(false);
     }, 400);
     return () => clearTimeout(timer);
-  }, [searchInputValue, productsData]);
+  }, [searchInputValue, products, productsData]);
 
   return (
     <section className="my-10 px-4 md:px-0">

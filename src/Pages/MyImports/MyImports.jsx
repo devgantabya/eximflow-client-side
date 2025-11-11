@@ -79,40 +79,46 @@ const MyImports = () => {
         {imports.map((item) => (
           <div
             key={item._id}
-            className="border rounded-xl shadow-md p-4 flex flex-col justify-between"
+            className="card shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 rounded-xl flex flex-col justify-between"
           >
-            <img
-              src={item.image}
-              alt={item.title}
-              className="rounded-lg h-48 w-full object-cover mb-4"
-            />
-            <h2 className="text-xl font-semibold mb-1">{item.title}</h2>
-            <p className="text-gray-600 mb-1">
-              Price: ${item.price_min} - ${item.price_max}
-            </p>
-            <p className="text-gray-600 mb-1">
-              Rating: ⭐ {item.rating || "N/A"}
-            </p>
-            <p className="text-gray-600 mb-1">
-              Origin: {item.origin_country || "N/A"}
-            </p>
-            <p className="text-gray-600 mb-2">
-              Quantity Imported: {item.imported_quantity}
-            </p>
+            <figure className="overflow-hidden rounded-t-lg h-[200px]">
+              <div className="bg-white w-full transform transition-transform duration-60  hover:scale-110">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-1/2 h-full object-cover rounded-t-lg mx-auto p-2"
+                />
+              </div>
+            </figure>
+            <div className="card-body px-5 py-4 bg-teal-50 rounded-b-lg">
+              <h2 className="card-title text-xl font-semibold dark:text-gray-200 text-gray-800 line-clamp-1">
+                {item.title}
+              </h2>
+              <p className="text-gray-600 mb-1">Price: ${item.price}</p>
+              <p className="text-gray-600 mb-1">
+                Rating: ⭐ {item.rating || "N/A"}
+              </p>
+              <p className="text-gray-600 mb-1">
+                Origin: {item.origin_country || "N/A"}
+              </p>
+              <p className="text-gray-600 mb-2">
+                Quantity Imported: {item.imported_quantity}
+              </p>
 
-            <div className="flex justify-between mt-auto gap-2">
-              <button
-                onClick={() => navigate(`/productDetails/${item.product_id}`)}
-                className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 flex-1"
-              >
-                See Details
-              </button>
-              <button
-                onClick={() => handleRemove(item._id)}
-                className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 flex-1"
-              >
-                Remove
-              </button>
+              <div className="flex justify-between mt-auto gap-2">
+                <button
+                  onClick={() => navigate(`/productDetails/${item.product_id}`)}
+                  className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 flex-1"
+                >
+                  See Details
+                </button>
+                <button
+                  onClick={() => handleRemove(item._id)}
+                  className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 flex-1"
+                >
+                  Remove
+                </button>
+              </div>
             </div>
           </div>
         ))}

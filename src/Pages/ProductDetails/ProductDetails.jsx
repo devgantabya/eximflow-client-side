@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
-import { toast } from "react-toastify";
 import productNotFoundImg from "../../assets/item-not-found.webp";
+import { toast } from "react-toastify";
 
 const ProductDetails = () => {
   const loadedProduct = useLoaderData();
@@ -60,8 +60,7 @@ const ProductDetails = () => {
           product_id: product._id,
           title: product.title,
           image: product.image,
-          price_min: product.price_min,
-          price_max: product.price_max,
+          price: product.price,
           rating: product.rating,
           origin_country: product.origin_country,
           imported_quantity: qty,
@@ -134,11 +133,11 @@ const ProductDetails = () => {
   return (
     <div className="container mx-auto my-10 px-4 md:px-0">
       <div className="grid md:grid-cols-2 gap-10 items-center">
-        <div>
+        <div className="">
           <img
             src={product.image}
             alt={product.title}
-            className="rounded-2xl shadow-md w-full h-[400px] object-cover"
+            className="rounded-2xl h-[500px] w-full mx-auto shadow-md object-contain"
           />
         </div>
         <div>
@@ -157,16 +156,6 @@ const ProductDetails = () => {
             <span className="font-semibold">Location:</span> {product.location}
           </p>
           <p className="text-gray-600 mb-3">
-            <span className="font-semibold">Status:</span>{" "}
-            <span
-              className={`px-2 py-1 rounded text-white ${
-                product.status === "pending" ? "bg-yellow-500" : "bg-green-500"
-              }`}
-            >
-              {product.status}
-            </span>
-          </p>
-          <p className="text-gray-600 mb-3">
             <span className="font-semibold">Rating:</span> ⭐{" "}
             {product.rating || "N/A"}
           </p>
@@ -175,7 +164,7 @@ const ProductDetails = () => {
             {product.available_quantity}
           </p>
           <p className="text-gray-800 text-lg font-semibold mb-4">
-            Price Range: ${product.price_min} - ${product.price_max}
+            Price: ${product.price}
           </p>
 
           <button
@@ -203,7 +192,7 @@ const ProductDetails = () => {
                 type="number"
                 value={importQty}
                 onChange={(e) => setImportQty(e.target.value)}
-                className="border border-gray-300 rounded-lg w-full p-2"
+                className="border border-gray-300 rounded-lg w-full p-2 focus:outline-2 focus:outline-primary"
                 placeholder="Enter quantity"
                 min={1}
                 max={product.available_quantity}
@@ -223,7 +212,7 @@ const ProductDetails = () => {
                   : "bg-primary hover:bg-primary/80"
               }`}
             >
-              {loading ? "Importing..." : "Submit Import"}
+              {loading ? "Importing..." : "Import"}
             </button>
           </form>
 

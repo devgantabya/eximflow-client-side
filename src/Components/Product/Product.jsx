@@ -8,8 +8,7 @@ const Product = ({ product }) => {
   const {
     _id,
     title,
-    price_min,
-    price_max,
+    price,
     image,
     origin_country,
     rating,
@@ -17,14 +16,16 @@ const Product = ({ product }) => {
   } = product;
 
   return (
-    <div className="card bg-base-500 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100">
-      <figure className="relative overflow-hidden rounded-t-xl">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-52 object-cover transform hover:scale-105 transition-transform duration-300"
-        />
-        <div className="absolute top-3 right-3 bg-white px-2 py-1 rounded-md text-base font-semibold flex items-center gap-1">
+    <div className="card bg-white shadow-sm transition-all duration-300 border border-gray-100">
+      <figure className="relative overflow-hidden rounded-t-lg h-[200px]">
+        <div className="w-full transform transition-transform duration-60  hover:scale-110">
+          <img
+            src={image}
+            alt={title}
+            className="w-1/2 h-full object-cover rounded-t-lg mx-auto p-2"
+          />
+        </div>
+        <div className="absolute top-3 right-3 bg-teal-50 shadow px-2 py-1 rounded-md text-base font-semibold flex items-center gap-1">
           <span className="text-yellow-500">
             <FaStar size={16} />
           </span>
@@ -32,15 +33,13 @@ const Product = ({ product }) => {
         </div>
       </figure>
 
-      <div className="card-body px-5 py-4">
+      <div className="card-body px-5 py-4 bg-teal-50 rounded-b-lg">
         <h2 className="card-title text-xl font-semibold dark:text-gray-200 text-gray-800 line-clamp-1">
           {title}
         </h2>
 
         <div className="text-sm text-gray-600 space-y-1">
-          <p className="text-xl font-semibold text-gray-700 mb-2">
-            ${price_min} - ${price_max}
-          </p>
+          <p className="text-xl font-semibold text-gray-700 mb-2">${price}</p>
           <p title="Origin Country" className="flex gap-1 items-center">
             <span className="font-medium text-gray-700">
               <CiLocationOn size={18} />

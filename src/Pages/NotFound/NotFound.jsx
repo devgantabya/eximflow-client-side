@@ -12,7 +12,7 @@ const NotFound = () => {
         <Navbar />
       </header>
 
-      <main className="flex-grow flex justify-center items-center bg-linear-to-r from-blue-100 to-blue-50 px-4 py-12 md:py-20">
+      <main className="grow flex justify-center items-center bg-linear-to-r from-blue-100 to-blue-50 px-4 py-12 md:py-20">
         <div className="text-center">
           <img
             src={errorImg}
