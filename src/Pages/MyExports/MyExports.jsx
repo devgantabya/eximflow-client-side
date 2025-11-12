@@ -110,10 +110,10 @@ const MyExports = () => {
           </div>
         </div>
       ) : (
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-6">
           <div className="text-center py-10">
             <title>EximFlow - My Exports</title>
-            <h1 className="text-4xl font-bold text-gray-800 mb-2">
+            <h1 className="text-4xl font-bold mb-2">
               My <span className="text-primary">Exports</span>
             </h1>
             <p className="text-gray-600">All exported products</p>

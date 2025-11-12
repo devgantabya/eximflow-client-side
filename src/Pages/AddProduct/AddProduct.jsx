@@ -15,7 +15,9 @@ const AddProduct = () => {
     const form = e.target;
     const product_name = form.product_name.value;
     const product_image = form.product_image.value;
+    const product_category = form.product_category.value;
     const price = parseFloat(form.price.value);
+    const address = form.address.value;
     const origin_country = form.origin_country.value;
     const rating = parseFloat(form.rating.value);
     const available_quantity = parseInt(form.available_quantity.value);
@@ -28,6 +30,8 @@ const AddProduct = () => {
       rating,
       available_quantity,
       exporter_email: user?.email,
+      product_category,
+      address,
     };
 
     try {
@@ -47,14 +51,14 @@ const AddProduct = () => {
           _id: data.productResult.insertedId,
           title: newProduct.product_name,
           image: newProduct.product_image,
+          category: newProduct.product_category,
           price: newProduct.price,
           email: newProduct.exporter_email,
-          category: "Exports",
           created_at: new Date(),
           origin_country: newProduct.origin_country,
           rating: newProduct.rating,
           available_quantity: newProduct.available_quantity,
-          location: newProduct.origin_country,
+          location: newProduct.address,
         };
 
         addProduct(productForUI);
@@ -74,7 +78,7 @@ const AddProduct = () => {
       <title>EximFlow - Add Product</title>
       <div className="max-w-3xl mx-auto bg-white shadow-md rounded-2xl p-8">
         <h2 className="text-3xl font-semibold text-center text-[#001931] mb-6">
-          Add Export / Product
+          Add Product
         </h2>
 
         <form onSubmit={handleAddProduct} className="space-y-5">
@@ -118,11 +122,11 @@ const AddProduct = () => {
 
             <div>
               <label className="block font-medium text-[#001931] mb-1">
-                Origin Country
+                Category
               </label>
               <input
                 type="text"
-                name="origin_country"
+                name="product_category"
                 required
                 className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
               />
@@ -131,11 +135,11 @@ const AddProduct = () => {
           <div className="grid md:grid-cols-2 gap-5">
             <div>
               <label className="block font-medium text-[#001931] mb-1">
-                Price
+                Location
               </label>
               <input
-                type="number"
-                name="price"
+                type="text"
+                name="address"
                 required
                 step="0.01"
                 className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
@@ -190,7 +194,7 @@ const AddProduct = () => {
             disabled={loading}
             className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:opacity-90 transition"
           >
-            {loading ? "Adding..." : "Add Export / Product"}
+            {loading ? "Adding..." : "Add Product"}
           </button>
         </form>
       </div>
