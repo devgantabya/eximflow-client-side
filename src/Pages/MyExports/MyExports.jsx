@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "./../../contexts/AuthContext/AuthContext";
+import { Link } from "react-router";
 
 const MyExports = () => {
   const { user } = useContext(AuthContext);
@@ -95,15 +96,28 @@ const MyExports = () => {
   };
 
   return (
-    <div className="container mx-auto py-10 px-4 md:px-0">
-      <h2 className="text-3xl font-semibold text-center text-[#001931] mb-6">
-        My Exports
-      </h2>
-
+    <div className="container mx-auto px-4 md:px-0">
       {exports.length === 0 ? (
-        <p className="text-center text-gray-500">No exports found.</p>
+        <div className="text-center h-screen flex justify-center items-center">
+          <div>
+            <title>EximFlow - Not Found Exports</title>
+            <h2 className="text-center text-gray-500 mb-6 text-3xl">
+              No exports found.
+            </h2>
+            <Link className="btn btn-primary" to={"/addProduct"}>
+              Add Product
+            </Link>
+          </div>
+        </div>
       ) : (
         <div className="grid md:grid-cols-3 gap-6">
+          <div className="text-center py-10">
+            <title>EximFlow - My Exports</title>
+            <h1 className="text-4xl font-bold text-gray-800 mb-2">
+              My <span className="text-primary">Exports</span>
+            </h1>
+            <p className="text-gray-600">All exported products</p>
+          </div>
           {exports.map((exp) => (
             <div
               key={exp._id}

@@ -109,6 +109,7 @@ const ProductDetails = () => {
   if (!product)
     return (
       <main className="grow flex justify-center items-center bg-linear-to-r from-blue-100 to-blue-50 px-4 py-12 md:py-20">
+        <title>EximFlow - Not found this product</title>
         <div className="text-center">
           <img
             src={productNotFoundImg}
@@ -132,6 +133,7 @@ const ProductDetails = () => {
 
   return (
     <div className="container mx-auto my-10 px-4 md:px-0">
+      <title>{`EximFlow - ${product.title}`}</title>
       <div className="grid md:grid-cols-2 gap-10 items-center">
         <div className="">
           <img
@@ -187,6 +189,22 @@ const ProductDetails = () => {
           </h3>
           <form onSubmit={handleImportSubmit}>
             <div className="mb-4">
+              <label className="block font-semibold mb-2">Importer Name</label>
+              <input
+                type="text"
+                defaultValue={user.displayName}
+                readOnly
+                disabled
+                className="border border-gray-300 rounded-lg w-full p-2 bg-gray-300 focus:outline-0 mb-4"
+              />
+              <label className="block font-semibold mb-2">Importer Email</label>
+              <input
+                type="email"
+                defaultValue={user.email}
+                readOnly
+                disabled
+                className="border border-gray-300 rounded-lg w-full p-2 bg-gray-300 focus:outline-0 mb-4"
+              />
               <label className="block font-semibold mb-2">Quantity</label>
               <input
                 type="number"

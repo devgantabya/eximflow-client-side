@@ -27,7 +27,6 @@ export const router = createBrowserRouter([
       },
       {
         path: "productDetails/:id",
-
         loader: async ({ params }) => {
           const res = await fetch(
             `http://localhost:5000/products/${params.id}`

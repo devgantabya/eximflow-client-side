@@ -71,6 +71,7 @@ const AddProduct = () => {
 
   return (
     <div className="bg-[#f9f9f9] min-h-screen py-10">
+      <title>EximFlow - Add Product</title>
       <div className="max-w-3xl mx-auto bg-white shadow-md rounded-2xl p-8">
         <h2 className="text-3xl font-semibold text-center text-[#001931] mb-6">
           Add Export / Product

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Loader from "../../Components/Loader/Loader";
 import { toast } from "react-toastify";
 
@@ -54,7 +54,7 @@ const MyImports = () => {
 
   if (loading)
     return (
-      <div className="flex justify-center mt-20">
+      <div className="flex justify-center items-center h-screen">
         <Loader />
       </div>
     );
@@ -62,7 +62,15 @@ const MyImports = () => {
   if (imports.length === 0)
     return (
       <div className="text-center text-2xl text-gray-500 h-screen flex justify-center items-center">
-        You have not imported any products yet.
+        <div>
+          <title>EximFlow - Not Found Imports</title>
+          <h2 className="text-center text-gray-500 mb-6 text-3xl">
+            You have not imported any products yet.
+          </h2>
+          <Link className="btn btn-primary" to={"/allProducts"}>
+            Back To All Products
+          </Link>
+        </div>
       </div>
     );
 
