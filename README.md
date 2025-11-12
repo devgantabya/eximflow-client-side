@@ -1,16 +1,30 @@
-# React + Vite
+# EXIM FLOW
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**A modern web platform where users can manage exports, browse global products, and import
+any product into their personal & My Imports & section with one click.**
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Overview
 
-## React Compiler
+**EXIM FLOW** is a products export import hub where users can:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Post items for sale (`Products`)
+- Import items (`Imports`)
+- Negotiate quantities through importing
+- Export items (`Exports`)
+- Take actions (`Post` `Update` `Remove`)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tech Stack
+
+| Layer    | Technology                    |
+| -------- | ----------------------------- |
+| Frontend | React / HTML+CSS+JS           |
+| Backend  | Node.js + Express             |
+| Database | MongoDB (NoSQL)               |
+| Auth     | Firebase-based Authentication |
+| API      | RESTful                       |
+
+---
