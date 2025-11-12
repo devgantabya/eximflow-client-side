@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { Link, useNavigate } from "react-router";
 import Loader from "../../Components/Loader/Loader";
@@ -12,7 +12,7 @@ const MyImports = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const fetchImports = async () => {
+  const fetchImports = useCallback(async () => {
     if (!user?.email) return;
     setLoading(true);
     try {
@@ -26,11 +26,11 @@ const MyImports = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user?.email]);
 
   useEffect(() => {
     fetchImports();
-  }, [user]);
+  }, [fetchImports]);
 
   const handleRemove = async (id) => {
     const confirm = window.confirm(
@@ -171,7 +171,7 @@ const MyImports = () => {
                     onClick={() =>
                       navigate(`/productDetails/${item.product_id}`)
                     }
-                    className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 w-full sm:w-auto"
+                    className="bg-primary/90 text-white px-3 py-1 rounded hover:bg-primary w-full sm:w-auto"
                   >
                     Details
                   </button>

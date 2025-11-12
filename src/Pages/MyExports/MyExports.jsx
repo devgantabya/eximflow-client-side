@@ -2,6 +2,9 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "./../../contexts/AuthContext/AuthContext";
 import { Link } from "react-router";
+import Loader from "../../Components/Loader/Loader";
+import { FaMapMarkerAlt, FaStar } from "react-icons/fa";
+import { IoBagCheck } from "react-icons/io5";
 
 const MyExports = () => {
   const { user } = useContext(AuthContext);
@@ -12,6 +15,7 @@ const MyExports = () => {
 
   useEffect(() => {
     const fetchExports = async () => {
+      setLoading(true);
       try {
         const res = await fetch(
           `http://localhost:5000/exports?email=${user?.email}`
@@ -21,6 +25,8 @@ const MyExports = () => {
       } catch (err) {
         console.dir(err);
         toast.error("Failed to load exports");
+      } finally {
+        setLoading(false);
       }
     };
     fetchExports();
@@ -42,7 +48,7 @@ const MyExports = () => {
       }
     } catch (err) {
       console.error(err);
-      toast.error("Failed to delete export");
+      toast.error("Failed to remove export");
     }
   };
 
@@ -97,68 +103,135 @@ const MyExports = () => {
     }
   };
 
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader />
+      </div>
+    );
+
+  if (exports.length === 0)
+    return (
+      <div className="text-center text-2xl text-gray-500 h-screen flex justify-center items-center">
+        <div>
+          <title>EximFlow - Not Found Exports</title>
+          <h2 className="text-center text-gray-500 mb-6 text-3xl">
+            You have not exported any products yet.
+          </h2>
+          <Link className="btn btn-primary" to={"/addProduct"}>
+            Add Export
+          </Link>
+        </div>
+      </div>
+    );
+
   return (
-    <div className="container mx-auto px-4 md:px-0">
-      {exports.length === 0 ? (
-        <div className="text-center h-screen flex justify-center items-center">
-          <div>
-            <title>EximFlow - Not Found Exports</title>
-            <h2 className="text-center text-gray-500 mb-6 text-3xl">
-              No exports found.
-            </h2>
-            <Link className="btn btn-primary" to={"/addProduct"}>
-              Add Export
-            </Link>
-          </div>
+    <div className="container mx-auto px-4 md:px-0 h-screen">
+      <div className="grid grid-cols-1 gap-6">
+        <div className="text-center py-10">
+          <title>EximFlow - My Exports</title>
+          <h1 className="text-4xl font-bold mb-2">
+            My <span className="text-primary">Exports</span>
+          </h1>
+          <p className="text-gray-600">All exported products</p>
         </div>
-      ) : (
-        <div className="grid grid-cols-1 gap-6">
-          <div className="text-center py-10">
-            <title>EximFlow - My Exports</title>
-            <h1 className="text-4xl font-bold mb-2">
-              My <span className="text-primary">Exports</span>
-            </h1>
-            <p className="text-gray-600">All exported products</p>
-          </div>
-          {exports.map((exp) => (
-            <div
-              key={exp._id}
-              className="bg-white shadow-md rounded-2xl overflow-hidden border"
-            >
-              <img
-                src={exp.product_image}
-                alt={exp.product_name}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4 space-y-2">
-                <h3 className="font-semibold text-lg">{exp.product_name}</h3>
-                <p className="text-gray-600">Price: ${exp.price}</p>
-                <p className="text-gray-600">Country: {exp.origin_country}</p>
-                <p className="text-gray-600">Rating: ⭐ {exp.rating}</p>
-                <p className="text-gray-600">
-                  Quantity: {exp.available_quantity}
-                </p>
+        <div className="overflow-x-auto">
+          <table className="table w-full">
+            <thead>
+              <tr className=" text-sm sm:text-base">
+                <th>SL No.</th>
+                <th>Products</th>
+                <th className="hidden sm:table-cell">Origin Country</th>
+                <th className="hidden md:table-cell">Rating</th>
+                <th className="hidden md:table-cell">Quantity</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {exports.map((exp, index) => (
+                <tr
+                  key={exp._id}
+                  className="border-b border-gray-100 text-sm sm:text-base"
+                >
+                  <th className="whitespace-nowrap">{index + 1}</th>
 
-                <div className="flex justify-between mt-4">
-                  <button
-                    onClick={() => handleEdit(exp)}
-                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded-lg"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(exp._id)}
-                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-lg"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
+                  <td>
+                    <div className="flex items-center gap-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle h-10 w-10 sm:h-12 sm:w-12">
+                          <img src={exp.product_image} alt={exp.product_name} />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="font-semibold">{exp.product_name}</div>
+                        <div className="text-xs sm:text-sm gap-2 flex flex-wrap">
+                          <p className="md:opacity-50">${exp.price}</p>
+                          <div className="md:hidden">
+                            <p className="flex items-center gap-1">
+                              <span className="text-yellow-500">
+                                <FaStar />
+                              </span>
+                              {exp.rating || "N/A"}
+                            </p>
+                          </div>
+                          <div className="md:hidden">
+                            <p className="flex items-center gap-1">
+                              <span className="text-green-500">
+                                <IoBagCheck />
+                              </span>
+                              {exp.available_quantity}
+                            </p>
+                          </div>
+                          <div className="md:hidden">
+                            <p className="flex items-center gap-1">
+                              <span className="text-red-500">
+                                <FaMapMarkerAlt />
+                              </span>
+                              {exp.origin_country || "N/A"}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td className="hidden sm:table-cell whitespace-nowrap">
+                    {exp.origin_country || "N/A"}
+                  </td>
+                  <td className="hidden md:table-cell whitespace-nowrap">
+                    <div className="">
+                      <p className="flex items-center gap-1">
+                        <span className="text-yellow-500">
+                          <FaStar />
+                        </span>
+                        {exp.rating || "N/A"}
+                      </p>
+                    </div>
+                  </td>
+                  <td className="hidden md:table-cell whitespace-nowrap">
+                    {exp.available_quantity}
+                  </td>
+
+                  <th className="flex flex-col sm:flex-row gap-2 mt-2 sm:mt-0">
+                    <button
+                      onClick={() => handleEdit(exp)}
+                      className="bg-primary/90 text-white px-3 py-1 rounded hover:bg-primary w-full sm:w-auto"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(exp._id)}
+                      className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 w-full sm:w-auto"
+                    >
+                      Delete
+                    </button>
+                  </th>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      )}
-
+      </div>
       <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg mb-4">
