@@ -19,26 +19,26 @@ const MyExports = () => {
         const data = await res.json();
         setExports(data);
       } catch (err) {
-        console.error(err);
+        console.dir(err);
         toast.error("Failed to load exports");
       }
     };
     fetchExports();
   }, [user?.email]);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (exportId) => {
     const confirm = window.confirm("Are you sure you want to delete this?");
     if (!confirm) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/exports/${id}`, {
+      const res = await fetch(`http://localhost:5000/myExports/${exportId}`, {
         method: "DELETE",
       });
       const data = await res.json();
 
       if (data.deletedCount > 0) {
         toast.success("Deleted successfully");
-        setExports((prev) => prev.filter((item) => item._id !== id));
+        setExports((prev) => prev.filter((item) => item._id !== exportId));
       }
     } catch (err) {
       console.error(err);
@@ -59,7 +59,9 @@ const MyExports = () => {
     const updatedExport = {
       product_name: form.product_name.value,
       product_image: form.product_image.value,
+      product_category: form.product_category.value,
       price: parseFloat(form.price.value),
+      address: form.address.value,
       origin_country: form.origin_country.value,
       rating: parseFloat(form.rating.value),
       available_quantity: parseInt(form.available_quantity.value),
@@ -67,7 +69,7 @@ const MyExports = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/exports/${selectedExport._id}`,
+        `http://localhost:5000/myExports/${selectedExport._id}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -88,8 +90,8 @@ const MyExports = () => {
         toast.info("No changes detected");
       }
     } catch (err) {
-      toast.error("Update failed");
       console.log(err);
+      toast.error("Update failed");
     } finally {
       setLoading(false);
     }
@@ -105,7 +107,7 @@ const MyExports = () => {
               No exports found.
             </h2>
             <Link className="btn btn-primary" to={"/addProduct"}>
-              Add Product
+              Add Export
             </Link>
           </div>
         </div>
@@ -142,7 +144,7 @@ const MyExports = () => {
                     onClick={() => handleEdit(exp)}
                     className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded-lg"
                   >
-                    Update
+                    Edit
                   </button>
                   <button
                     onClick={() => handleDelete(exp._id)}
@@ -160,7 +162,7 @@ const MyExports = () => {
       <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
           <h3 className="font-bold text-lg mb-4">
-            Update Export - {selectedExport?.product_name}
+            Update Product - {selectedExport?.product_name}
           </h3>
 
           {selectedExport && (
@@ -183,6 +185,20 @@ const MyExports = () => {
                 type="number"
                 name="price"
                 defaultValue={selectedExport.price}
+                className="border border-gray-300 rounded-lg w-full p-2"
+                required
+              />
+              <input
+                type="text"
+                name="product_category"
+                defaultValue={selectedExport.product_category}
+                className="border border-gray-300 rounded-lg w-full p-2"
+                required
+              />
+              <input
+                type="text"
+                name="address"
+                defaultValue={selectedExport.address}
                 className="border border-gray-300 rounded-lg w-full p-2"
                 required
               />
@@ -214,9 +230,9 @@ const MyExports = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-br from-[#632EE3] to-[#9F62F2] text-white py-2 rounded-lg"
+                className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:opacity-90 transition"
               >
-                {loading ? "Updating..." : "Submit"}
+                {loading ? "Updating..." : "Update"}
               </button>
             </form>
           )}

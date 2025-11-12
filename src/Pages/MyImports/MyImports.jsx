@@ -85,7 +85,7 @@ const MyImports = () => {
           My <span className="text-primary">Imports</span>
         </h1>
         <p className="text-gray-600 text-sm sm:text-base mb-4">
-          Your Imported products
+          All Imported products
         </p>
       </div>
 

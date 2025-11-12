@@ -2,11 +2,13 @@ import React, { useState, useContext } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { ProductsContext } from "./../../contexts/ProductsContext/ProductsContext";
+import { useNavigate } from "react-router";
 
 const AddProduct = () => {
   const { user } = useContext(AuthContext);
   const { addProduct } = useContext(ProductsContext);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleAddProduct = async (e) => {
     e.preventDefault();
@@ -62,6 +64,7 @@ const AddProduct = () => {
         };
 
         addProduct(productForUI);
+        navigate("/myExports");
       } else {
         toast.error("Failed to add product. Try again!");
       }
@@ -90,7 +93,7 @@ const AddProduct = () => {
               type="text"
               name="product_name"
               required
-              className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full input border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
@@ -102,7 +105,7 @@ const AddProduct = () => {
               type="text"
               name="product_image"
               required
-              className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full input border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
@@ -116,7 +119,7 @@ const AddProduct = () => {
                 name="price"
                 required
                 step="0.01"
-                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full border input border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
 
@@ -128,33 +131,7 @@ const AddProduct = () => {
                 type="text"
                 name="product_category"
                 required
-                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
-          </div>
-          <div className="grid md:grid-cols-2 gap-5">
-            <div>
-              <label className="block font-medium text-[#001931] mb-1">
-                Location
-              </label>
-              <input
-                type="text"
-                name="address"
-                required
-                step="0.01"
-                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
-
-            <div>
-              <label className="block font-medium text-[#001931] mb-1">
-                Origin Country
-              </label>
-              <input
-                type="text"
-                name="origin_country"
-                required
-                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full border input border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           </div>
@@ -171,7 +148,7 @@ const AddProduct = () => {
                 step="0.1"
                 min="0"
                 max="5"
-                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full input border  border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
 
@@ -184,7 +161,33 @@ const AddProduct = () => {
                 name="available_quantity"
                 required
                 min="1"
-                className="w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full input border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+          </div>
+          <div className="grid md:grid-cols-2 gap-5">
+            <div>
+              <label className="block font-medium text-[#001931] mb-1">
+                Location
+              </label>
+              <input
+                type="text"
+                name="address"
+                required
+                step="0.01"
+                className="w-full input border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+
+            <div>
+              <label className="block font-medium text-[#001931] mb-1">
+                Origin Country
+              </label>
+              <input
+                type="text"
+                name="origin_country"
+                required
+                className="w-full input border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           </div>
