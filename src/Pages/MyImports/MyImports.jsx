@@ -3,6 +3,8 @@ import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { Link, useNavigate } from "react-router";
 import Loader from "../../Components/Loader/Loader";
 import { toast } from "react-toastify";
+import { FaMapMarkerAlt, FaStar } from "react-icons/fa";
+import { LuImport } from "react-icons/lu";
 
 const MyImports = () => {
   const { user } = useContext(AuthContext);
@@ -75,61 +77,115 @@ const MyImports = () => {
     );
 
   return (
-    <div className="container mx-auto px-4 md:px-0 my-10">
+    <div className="container mx-auto px-4 md:px-0 py-5 md:my-10">
       <title>EximFlow - My Imports</title>
+
       <div className="text-center py-10">
-        <h1 className="text-4xl font-bold text-gray-800 mb-2">
+        <h1 className="text-3xl sm:text-4xl font-bold mb-2">
           My <span className="text-primary">Imports</span>
         </h1>
-        <p className="text-gray-600">Your Imported products</p>
+        <p className="text-gray-600 text-sm sm:text-base mb-4">
+          Your Imported products
+        </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {imports.map((item) => (
-          <div
-            key={item._id}
-            className="card shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 rounded-xl flex flex-col justify-between"
-          >
-            <figure className="overflow-hidden rounded-t-lg h-[200px]">
-              <div className="bg-white w-full transform transition-transform duration-60  hover:scale-110">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-1/2 h-full object-cover rounded-t-lg mx-auto p-2"
-                />
-              </div>
-            </figure>
-            <div className="card-body px-5 py-4 bg-teal-50 rounded-b-lg">
-              <h2 className="card-title text-xl font-semibold dark:text-gray-200 text-gray-800 line-clamp-1">
-                {item.title}
-              </h2>
-              <p className="text-gray-600 mb-1">Price: ${item.price}</p>
-              <p className="text-gray-600 mb-1">
-                Rating: ⭐ {item.rating || "N/A"}
-              </p>
-              <p className="text-gray-600 mb-1">
-                Origin: {item.origin_country || "N/A"}
-              </p>
-              <p className="text-gray-600 mb-2">
-                Quantity Imported: {item.imported_quantity}
-              </p>
 
-              <div className="flex justify-between mt-auto gap-2">
-                <button
-                  onClick={() => navigate(`/productDetails/${item.product_id}`)}
-                  className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 flex-1"
-                >
-                  See Details
-                </button>
-                <button
-                  onClick={() => handleRemove(item._id)}
-                  className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 flex-1"
-                >
-                  Remove
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
+      <div className="overflow-x-auto">
+        <table className="table w-full">
+          <thead>
+            <tr className=" text-sm sm:text-base">
+              <th>SL No.</th>
+              <th>Products</th>
+              <th className="hidden sm:table-cell">Origin Country</th>
+              <th className="hidden md:table-cell">Rating</th>
+              <th className="hidden md:table-cell">Imported Quantity</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {imports.map((item, index) => (
+              <tr
+                key={item._id}
+                className="border-b border-gray-100 text-sm sm:text-base"
+              >
+                <th className="whitespace-nowrap">{index + 1}</th>
+
+                <td>
+                  <div className="flex items-center gap-3">
+                    <div className="avatar">
+                      <div className="mask mask-squircle h-10 w-10 sm:h-12 sm:w-12">
+                        <img src={item.image} alt={item.title} />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="font-semibold">{item.title}</div>
+                      <div className="text-xs sm:text-sm gap-2 flex flex-wrap">
+                        <p className="md:opacity-50">${item.price}</p>
+                        <div className="md:hidden">
+                          <p className="flex items-center gap-1">
+                            <span className="text-yellow-500">
+                              <FaStar />
+                            </span>
+                            {item.rating || "N/A"}
+                          </p>
+                        </div>
+                        <div className="md:hidden">
+                          <p className="flex items-center gap-1">
+                            <span className="text-green-500">
+                              <LuImport />
+                            </span>
+                            {item.imported_quantity}
+                          </p>
+                        </div>
+                        <div className="md:hidden">
+                          <p className="flex items-center gap-1">
+                            <span className="text-red-500">
+                              <FaMapMarkerAlt />
+                            </span>
+                            {item.origin_country || "N/A"}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+
+                <td className="hidden sm:table-cell whitespace-nowrap">
+                  {item.origin_country || "N/A"}
+                </td>
+                <td className="hidden md:table-cell whitespace-nowrap">
+                  <div className="">
+                    <p className="flex items-center gap-1">
+                      <span className="text-yellow-500">
+                        <FaStar />
+                      </span>
+                      {item.rating || "N/A"}
+                    </p>
+                  </div>
+                </td>
+                <td className="hidden md:table-cell whitespace-nowrap">
+                  {item.imported_quantity}
+                </td>
+
+                <th className="flex flex-col sm:flex-row gap-2 mt-2 sm:mt-0">
+                  <button
+                    onClick={() =>
+                      navigate(`/productDetails/${item.product_id}`)
+                    }
+                    className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 w-full sm:w-auto"
+                  >
+                    Details
+                  </button>
+                  <button
+                    onClick={() => handleRemove(item._id)}
+                    className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 w-full sm:w-auto"
+                  >
+                    Remove
+                  </button>
+                </th>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
