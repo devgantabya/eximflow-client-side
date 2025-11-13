@@ -44,9 +44,7 @@ const Navbar = () => {
           to="/"
           className={({ isActive }) =>
             `px-3 py-2 font-medium transition-colors duration-200 ${
-              isActive
-                ? "text-primary border-b-2"
-                : "text-gray-600 hover:text-primary"
+              isActive ? "text-primary border-b-2" : "hover:text-primary"
             }`
           }
         >
@@ -59,9 +57,7 @@ const Navbar = () => {
           to="/allProducts"
           className={({ isActive }) =>
             `px-3 py-2 font-medium transition-colors duration-200 ${
-              isActive
-                ? "text-primary border-b-2"
-                : "text-gray-600 hover:text-primary"
+              isActive ? "text-primary border-b-2" : "hover:text-primary"
             }`
           }
         >
@@ -76,9 +72,7 @@ const Navbar = () => {
               to="/myExports"
               className={({ isActive }) =>
                 `px-3 py-2 font-medium transition-colors duration-200 ${
-                  isActive
-                    ? "text-primary border-b-2"
-                    : "text-gray-600 hover:text-primary"
+                  isActive ? "text-primary border-b-2" : "hover:text-primary"
                 }`
               }
             >
@@ -91,9 +85,7 @@ const Navbar = () => {
               to="/myImports"
               className={({ isActive }) =>
                 `px-3 py-2 font-medium transition-colors duration-200 ${
-                  isActive
-                    ? "text-primary border-b-2"
-                    : "text-gray-600 hover:text-primary"
+                  isActive ? "text-primary border-b-2" : "hover:text-primary"
                 }`
               }
             >
@@ -106,9 +98,7 @@ const Navbar = () => {
               to="/addProduct"
               className={({ isActive }) =>
                 `px-3 py-2 font-medium transition-colors duration-200 ${
-                  isActive
-                    ? "text-primary border-b-2"
-                    : "text-gray-600 hover:text-primary"
+                  isActive ? "text-primary border-b-2" : "hover:text-primary"
                 }`
               }
             >

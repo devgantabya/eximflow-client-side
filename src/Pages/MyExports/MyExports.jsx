@@ -135,7 +135,7 @@ const MyExports = () => {
     );
 
   return (
-    <div className="container mx-auto px-4 md:px-0 h-screen">
+    <div className="container mx-auto px-4 md:px-0 min-h-screen">
       <div className="grid grid-cols-1 gap-6">
         <div className="text-center py-10">
           <title>EximFlow - My Exports</title>

@@ -77,33 +77,34 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="bg-[#f9f9f9] min-h-screen py-10">
+    <div className="min-h-screen py-10">
       <title>EximFlow - Add Product</title>
-      <div className="max-w-3xl mx-auto bg-white shadow-md rounded-2xl p-8">
-        <h2 className="text-3xl font-semibold text-center text-[#001931] mb-6">
-          Add Product
+      <div className="max-w-3xl mx-auto shadow-lg rounded-2xl p-8">
+        <h2 className="text-4xl font-bold text-center mb-2">
+          Add <span className="text-primary">Product</span>
         </h2>
+        <p className="text-gray-600 text-center mb-6">
+          Fill out the form below to add a new product to your store.
+        </p>
 
         <form onSubmit={handleAddProduct} className="space-y-5">
           <div>
-            <label className="block font-medium text-[#001931] mb-1">
-              Product Name
-            </label>
+            <label className="block font-medium mb-1">Product Name</label>
             <input
               type="text"
               name="product_name"
+              placeholder="Havit N5086 HD webcam for sale"
               required
               className="w-full input border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
 
           <div>
-            <label className="block font-medium text-[#001931] mb-1">
-              Product Image URL
-            </label>
+            <label className="block font-medium mb-1">Product Image URL</label>
             <input
               type="text"
               name="product_image"
+              placeholder="https://..."
               required
               className="w-full input border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
             />
@@ -111,12 +112,11 @@ const AddProduct = () => {
 
           <div className="grid md:grid-cols-2 gap-5">
             <div>
-              <label className="block font-medium text-[#001931] mb-1">
-                Price
-              </label>
+              <label className="block font-medium mb-1">Price</label>
               <input
                 type="number"
                 name="price"
+                placeholder="$50"
                 required
                 step="0.01"
                 className="w-full border input border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
@@ -124,12 +124,11 @@ const AddProduct = () => {
             </div>
 
             <div>
-              <label className="block font-medium text-[#001931] mb-1">
-                Category
-              </label>
+              <label className="block font-medium mb-1">Category</label>
               <input
                 type="text"
                 name="product_category"
+                placeholder="Type your product category"
                 required
                 className="w-full border input border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
               />
@@ -138,12 +137,11 @@ const AddProduct = () => {
 
           <div className="grid md:grid-cols-2 gap-5">
             <div>
-              <label className="block font-medium text-[#001931] mb-1">
-                Rating
-              </label>
+              <label className="block font-medium mb-1">Rating</label>
               <input
                 type="number"
                 name="rating"
+                placeholder="Range: 0 - 5"
                 required
                 step="0.1"
                 min="0"
@@ -153,12 +151,13 @@ const AddProduct = () => {
             </div>
 
             <div>
-              <label className="block font-medium text-[#001931] mb-1">
+              <label className="block font-medium mb-1">
                 Available Quantity
               </label>
               <input
                 type="number"
                 name="available_quantity"
+                placeholder="100"
                 required
                 min="1"
                 className="w-full input border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
@@ -167,12 +166,11 @@ const AddProduct = () => {
           </div>
           <div className="grid md:grid-cols-2 gap-5">
             <div>
-              <label className="block font-medium text-[#001931] mb-1">
-                Location
-              </label>
+              <label className="block font-medium mb-1">Location</label>
               <input
                 type="text"
                 name="address"
+                placeholder="City"
                 required
                 step="0.01"
                 className="w-full input border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
@@ -180,12 +178,11 @@ const AddProduct = () => {
             </div>
 
             <div>
-              <label className="block font-medium text-[#001931] mb-1">
-                Origin Country
-              </label>
+              <label className="block font-medium mb-1">Origin Country</label>
               <input
                 type="text"
                 name="origin_country"
+                placeholder="Country"
                 required
                 className="w-full input border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
               />
