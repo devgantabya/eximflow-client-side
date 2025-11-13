@@ -6,8 +6,8 @@ const LatestProducts = ({ latestProductsPromise }) => {
 
   return (
     <section className="my-10 px-4 md:px-0">
-      <div className="text-center py-10">
-        <h1 className="text-4xl font-bold text-gray-800 mb-2">
+      <div className="text-center md:py-10">
+        <h1 className="text-4xl font-bold mb-2">
           Latest <span className="text-primary">Products</span>
         </h1>
         <p className="text-gray-600">Discover our newest arrivals</p>

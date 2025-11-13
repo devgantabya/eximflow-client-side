@@ -12,12 +12,21 @@ const MyImports = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const fetchImports = useCallback(async () => {
     if (!user?.email) return;
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:5000/myImports?email=${user.email}`
+        `http://localhost:5000/myImports?email=${user.email}`,
+        {
+          headers: {
+            authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       );
       const data = await res.json();
       setImports(data);
@@ -77,7 +86,7 @@ const MyImports = () => {
     );
 
   return (
-    <div className="container mx-auto px-4 md:px-0 py-5 md:my-10">
+    <div className="container mx-auto px-4 md:px-0">
       <title>EximFlow - My Imports</title>
 
       <div className="text-center py-10">

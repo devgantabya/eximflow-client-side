@@ -14,11 +14,20 @@ const MyExports = () => {
   const modalRef = useRef(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const fetchExports = async () => {
       setLoading(true);
       try {
         const res = await fetch(
-          `http://localhost:5000/exports?email=${user?.email}`
+          `http://localhost:5000/exports?email=${user?.email}`,
+          {
+            headers: {
+              authorization: `Bearer ${user.accessToken}`,
+            },
+          }
         );
         const data = await res.json();
         setExports(data);
@@ -30,7 +39,7 @@ const MyExports = () => {
       }
     };
     fetchExports();
-  }, [user?.email]);
+  }, [user?.email, user.accessToken]);
 
   const handleDelete = async (exportId) => {
     const confirm = window.confirm("Are you sure you want to delete this?");

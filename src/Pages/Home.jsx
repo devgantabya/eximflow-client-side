@@ -1,6 +1,7 @@
 import React from "react";
 import LatestProducts from "../Components/LatestProducts/LatestProducts";
 import { Link } from "react-router";
+import Banner from "../Components/Banner/Banner";
 
 const latestProductsPromise = fetch(
   "http://localhost:5000/latest-products"
@@ -8,6 +9,9 @@ const latestProductsPromise = fetch(
 const Home = () => {
   return (
     <div>
+      <section>
+        <Banner></Banner>
+      </section>
       <div className="container mx-auto">
         <LatestProducts
           latestProductsPromise={latestProductsPromise}
