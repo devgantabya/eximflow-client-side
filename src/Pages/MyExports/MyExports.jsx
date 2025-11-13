@@ -22,7 +22,7 @@ const MyExports = () => {
       setLoading(true);
       try {
         const res = await fetch(
-          `http://localhost:5000/exports?email=${user?.email}`,
+          `https://eximflow-api-server.vercel.app/exports?email=${user?.email}`,
           {
             headers: {
               authorization: `Bearer ${user.accessToken}`,
@@ -46,9 +46,12 @@ const MyExports = () => {
     if (!confirm) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/myExports/${exportId}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `https://eximflow-api-server.vercel.app/myExports/${exportId}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await res.json();
 
       if (data.deletedCount > 0) {
@@ -84,7 +87,7 @@ const MyExports = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/myExports/${selectedExport._id}`,
+        `https://eximflow-api-server.vercel.app/myExports/${selectedExport._id}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -221,7 +224,7 @@ const MyExports = () => {
                     {exp.available_quantity}
                   </td>
 
-                  <th className="flex flex-col sm:flex-row gap-2 mt-2 sm:mt-0">
+                  <th className="flex flex-col lg:flex-row gap-2 mt-2 sm:mt-0">
                     <button
                       onClick={() => handleEdit(exp)}
                       className="bg-primary/90 text-white px-3 py-1 rounded hover:bg-primary w-full sm:w-auto"

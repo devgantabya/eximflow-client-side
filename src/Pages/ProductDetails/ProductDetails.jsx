@@ -34,7 +34,7 @@ const ProductDetails = () => {
 
     try {
       const checkRes = await fetch(
-        `http://localhost:5000/myImports?email=${user.email}`,
+        `https://eximflow-api-server.vercel.app/myImports?email=${user.email}`,
         {
           headers: {
             authorization: `Bearer ${user.accessToken}`,
@@ -48,7 +48,7 @@ const ProductDetails = () => {
 
       if (existingImport) {
         const updateRes = await fetch(
-          `http://localhost:5000/myImports/${existingImport._id}`,
+          `https://eximflow-api-server.vercel.app/myImports/${existingImport._id}`,
           {
             method: "PATCH",
             headers: { "content-type": "application/json" },
@@ -73,17 +73,20 @@ const ProductDetails = () => {
           importer_name: user?.displayName,
           imported_at: new Date(),
         };
-        const res = await fetch("http://localhost:5000/myImports", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify(newImport),
-        });
+        const res = await fetch(
+          "https://eximflow-api-server.vercel.app/myImports",
+          {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(newImport),
+          }
+        );
         const data = await res.json();
         if (!data.insertedId) throw new Error("Failed to save import");
       }
 
       const reduceRes = await fetch(
-        `http://localhost:5000/products/${product._id}/reduce`,
+        `https://eximflow-api-server.vercel.app/products/${product._id}/reduce`,
         {
           method: "PATCH",
           headers: { "content-type": "application/json" },

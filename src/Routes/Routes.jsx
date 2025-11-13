@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
         path: "productDetails/:id",
         loader: async ({ params }) => {
           const res = await fetch(
-            `http://localhost:5000/products/${params.id}`
+            `https://eximflow-api-server.vercel.app/products/${params.id}`
           );
 
           if (!res.ok) return null;

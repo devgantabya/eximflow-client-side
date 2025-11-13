@@ -62,7 +62,7 @@ const AllProductsList = ({ allProductsPromise }) => {
           <Loader />
         </div>
       ) : filteredProducts.length > 0 ? (
-        <div className="grid gap-6 md:grid-cols-4 sm:grid-cols-2 grid-cols-1">
+        <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-4 sm:grid-cols-2 grid-cols-1">
           {filteredProducts.map((product) => (
             <Product key={product._id} product={product} />
           ))}

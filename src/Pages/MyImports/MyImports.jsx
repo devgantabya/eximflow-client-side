@@ -21,7 +21,7 @@ const MyImports = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:5000/myImports?email=${user.email}`,
+        `https://eximflow-api-server.vercel.app/myImports?email=${user.email}`,
         {
           headers: {
             authorization: `Bearer ${user.accessToken}`,
@@ -48,9 +48,12 @@ const MyImports = () => {
     if (!confirm) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/myImports/${id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `https://eximflow-api-server.vercel.app/myImports/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
       const data = await res.json();
       if (data.deletedCount > 0) {
         toast.success("Import removed successfully!");
@@ -86,7 +89,7 @@ const MyImports = () => {
     );
 
   return (
-    <div className="container mx-auto px-4 md:px-0">
+    <div className="container mx-auto px-4 md:px-0 h-screen">
       <title>EximFlow - My Imports</title>
 
       <div className="text-center py-10">
@@ -98,7 +101,7 @@ const MyImports = () => {
         </p>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-hidden">
         <table className="table w-full">
           <thead>
             <tr className=" text-sm sm:text-base">
@@ -106,7 +109,7 @@ const MyImports = () => {
               <th>Products</th>
               <th className="hidden sm:table-cell">Origin Country</th>
               <th className="hidden md:table-cell">Rating</th>
-              <th className="hidden md:table-cell">Imported Quantity</th>
+              <th className="hidden md:table-cell">Qty Imported</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -175,7 +178,7 @@ const MyImports = () => {
                   {item.imported_quantity}
                 </td>
 
-                <th className="flex flex-col sm:flex-row gap-2 mt-2 sm:mt-0">
+                <th className="flex flex-col lg:flex-row gap-2 mt-2 sm:mt-0">
                   <button
                     onClick={() =>
                       navigate(`/productDetails/${item.product_id}`)

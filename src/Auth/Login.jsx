@@ -48,7 +48,7 @@ const Login = () => {
           image: result.user.photoURL,
         };
 
-        return fetch("http://localhost:5000/users", {
+        return fetch("https://eximflow-api-server.vercel.app/users", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

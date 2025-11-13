@@ -50,7 +50,7 @@ const Register = () => {
           email,
           image: photoURL || null,
         };
-        return fetch("http://localhost:5000/users", {
+        return fetch("https://eximflow-api-server.vercel.app/users", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newUser),
@@ -77,7 +77,7 @@ const Register = () => {
           image: result.user.photoURL,
         };
 
-        return fetch("http://localhost:5000/users", {
+        return fetch("https://eximflow-api-server.vercel.app/users", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

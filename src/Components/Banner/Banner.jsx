@@ -5,7 +5,7 @@ import { Link } from "react-router";
 const Banner = () => {
   return (
     <div
-      className="hero md:min-h-screen h-[400px]"
+      className="hero lg:h-screen md:h-[500px] h-[400px]"
       style={{
         backgroundImage: `url(${bannerImg})`,
         backgroundSize: "cover",
@@ -16,7 +16,7 @@ const Banner = () => {
       <div className="hero-overlay py-10"></div>
       <div className="hero-content text-neutral-content text-center">
         <div className="max-w-4xl">
-          <h1 className="mb-5 text-3xl md:text-6xl font-extrabold uppercase">
+          <h1 className="mb-5 text-3xl md:text-5xl lg:text-6xl font-extrabold uppercase">
             Largest Export-Import Trade Data Platform
           </h1>
           <p className="mb-5 max-w-xl mx-auto text-xl">

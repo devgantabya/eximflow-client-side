@@ -1,12 +1,19 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import AllProductsList from "../../Components/AllProductsList/AllProductsList";
 import Loader from "../../Components/Loader/Loader";
+import { useLocation } from "react-router";
 
-const allProductsPromise = fetch("http://localhost:5000/products").then((res) =>
-  res.json()
-);
+const allProductsPromise = fetch(
+  "https://eximflow-api-server.vercel.app/products"
+).then((res) => res.json());
 
 const AllProducts = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+
   return (
     <div className="container mx-auto my-10">
       <title>Eximflow - All Products</title>

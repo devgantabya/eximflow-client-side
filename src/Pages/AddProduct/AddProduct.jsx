@@ -1,14 +1,19 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { ProductsContext } from "./../../contexts/ProductsContext/ProductsContext";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 const AddProduct = () => {
+  const location = useLocation();
   const { user } = useContext(AuthContext);
   const { addProduct } = useContext(ProductsContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   const handleAddProduct = async (e) => {
     e.preventDefault();
@@ -37,11 +42,14 @@ const AddProduct = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/exports", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newProduct),
-      });
+      const res = await fetch(
+        "https://eximflow-api-server.vercel.app/exports",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newProduct),
+        }
+      );
 
       const data = await res.json();
 

@@ -14,7 +14,7 @@ export const ImportsProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:5000/myImports?email=${user.email}`
+        `https://eximflow-api-server.vercel.app/myImports?email=${user.email}`
       );
       const data = await res.json();
       setImports(data);
