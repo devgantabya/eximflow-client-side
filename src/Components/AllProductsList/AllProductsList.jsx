@@ -13,6 +13,10 @@ const AllProductsList = ({ allProductsPromise }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (!searchInputValue.trim()) {
+      setFilteredProducts(productsData);
+      return;
+    }
     setLoading(true);
     const timer = setTimeout(() => {
       const result = productsData.filter((product) =>
@@ -20,14 +24,14 @@ const AllProductsList = ({ allProductsPromise }) => {
       );
       setFilteredProducts(result);
       setLoading(false);
-    }, 400);
+    }, 300);
     return () => clearTimeout(timer);
   }, [searchInputValue, products, productsData]);
 
   return (
     <section className="my-10 px-4 md:px-0">
       <div className="text-center py-10">
-        <h1 className="text-4xl font-bold text-gray-800 mb-2">
+        <h1 className="text-4xl font-bold mb-2">
           All <span className="text-primary">Products</span>
         </h1>
         <p className="text-gray-600">
@@ -37,7 +41,7 @@ const AllProductsList = ({ allProductsPromise }) => {
 
       <div className="flex flex-col md:flex-row justify-center md:justify-between items-center px-4 md:px-0 pb-5 md:pb-2">
         <div className="py-5">
-          <h3 className="text-[#001931] text-2xl font-semibold">
+          <h3 className="text-2xl font-semibold">
             ({filteredProducts.length}) Products Found
           </h3>
         </div>
@@ -48,7 +52,7 @@ const AllProductsList = ({ allProductsPromise }) => {
             placeholder="Search products"
             value={searchInputValue}
             onChange={(e) => setSearchInputValue(e.target.value)}
-            className="border border-gray-300 rounded-lg pl-10 pr-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+            className="border border-gray-300 rounded-lg pl-10 pr-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 "
           />
         </div>
       </div>

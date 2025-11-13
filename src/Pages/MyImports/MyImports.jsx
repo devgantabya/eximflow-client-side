@@ -35,7 +35,7 @@ const MyImports = () => {
     } finally {
       setLoading(false);
     }
-  }, [user?.email]);
+  }, [user?.email, user.accessToken]);
 
   useEffect(() => {
     fetchImports();

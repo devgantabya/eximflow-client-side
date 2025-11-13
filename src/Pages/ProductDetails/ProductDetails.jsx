@@ -34,7 +34,12 @@ const ProductDetails = () => {
 
     try {
       const checkRes = await fetch(
-        `http://localhost:5000/myImports?email=${user.email}`
+        `http://localhost:5000/myImports?email=${user.email}`,
+        {
+          headers: {
+            authorization: `Bearer ${user.accessToken}`,
+          },
+        }
       );
       const userImports = await checkRes.json();
       const existingImport = userImports.find(
