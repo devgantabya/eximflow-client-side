@@ -6,7 +6,7 @@ import { Link } from "react-router";
 const Footer = () => {
   return (
     <footer className="bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 border-t border-gray-200 dark:border-gray-700">
-      <div className="container mx-auto py-8 px-4 md:px-0">
+      <div className="container mx-auto py-8 px-4">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-center md:text-left">
             <Link

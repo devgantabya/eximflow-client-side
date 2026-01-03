@@ -75,7 +75,7 @@ const AllProducts = () => {
     );
 
   return (
-    <div className="container mx-auto px-4 md:px-0 my-10 bg-white dark:bg-gray-900 min-h-screen">
+    <div className="container mx-auto px-4 my-10 bg-white dark:bg-gray-900 min-h-screen">
       <title>Eximflow - All Products</title>
 
       <div className="text-center my-5 md:my-12">

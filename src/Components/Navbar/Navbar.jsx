@@ -2,7 +2,13 @@ import React, { useState, useEffect, useRef, use } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
 import { toast } from "react-toastify";
-import { FaGlobe, FaBars } from "react-icons/fa";
+import {
+  FaBars,
+  FaUser,
+  FaBoxOpen,
+  FaPlusCircle,
+  FaSignOutAlt,
+} from "react-icons/fa";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -36,7 +42,7 @@ const Navbar = () => {
   };
 
   const navItemClass = ({ isActive }) =>
-    `px-3 py-2 text-base font-medium transition-all duration-200 
+    `px-2 py-2 text-base font-medium transition-all duration-200 
      ${
        isActive
          ? "text-emerald-500 border-b-2 border-emerald-500"
@@ -53,27 +59,27 @@ const Navbar = () => {
 
       <li onClick={() => setMenuOpen(false)}>
         <NavLink to="/allProducts" className={navItemClass}>
-          All Products
+          Products
+        </NavLink>
+      </li>
+
+      <li onClick={() => setMenuOpen(false)}>
+        <NavLink to="/about-us" className={navItemClass}>
+          About
+        </NavLink>
+      </li>
+
+      <li onClick={() => setMenuOpen(false)}>
+        <NavLink to="/contact-us" className={navItemClass}>
+          Contact
         </NavLink>
       </li>
 
       {user && (
         <>
           <li onClick={() => setMenuOpen(false)}>
-            <NavLink to="/myExports" className={navItemClass}>
-              My Exports
-            </NavLink>
-          </li>
-
-          <li onClick={() => setMenuOpen(false)}>
             <NavLink to="/myImports" className={navItemClass}>
               My Imports
-            </NavLink>
-          </li>
-
-          <li onClick={() => setMenuOpen(false)}>
-            <NavLink to="/addProduct" className={navItemClass}>
-              Add Export
             </NavLink>
           </li>
         </>
@@ -95,7 +101,6 @@ const Navbar = () => {
             </button>
 
             <Link to="/" className="flex items-center gap-2">
-              <FaGlobe className="text-emerald-500 text-2xl" />
               <span className="text-2xl font-extrabold tracking-wide text-gray-800 dark:text-white">
                 Exim<span className="text-emerald-500">Flow</span>
               </span>
@@ -122,17 +127,84 @@ const Navbar = () => {
                 </button>
 
                 {dropdownOpen && (
-                  <div className="absolute right-0 mt-3 w-52 rounded-xl bg-white dark:bg-gray-800 shadow-lg overflow-hidden">
-                    <p className="px-4 py-3 text-sm font-semibold text-gray-700 dark:text-gray-200 border-b dark:border-gray-700">
-                      {user.displayName || "User"}
-                    </p>
+                  <div className="absolute right-0 mt-3 w-56 rounded-b-2xl bg-white dark:bg-gray-800 shadow-xl border-0 dark:border-gray-700 overflow-hidden">
+                    {/* User Info */}
+                    <div className="px-4 py-4 border-b dark:border-gray-700">
+                      <p className="text-sm font-semibold text-gray-800 dark:text-gray-100">
+                        {user.displayName || "User"}
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                        {user.email}
+                      </p>
+                    </div>
 
-                    <button
-                      onClick={handleLogout}
-                      className="w-full text-left px-4 py-3 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-gray-700 transition"
-                    >
-                      Logout
-                    </button>
+                    {/* Menu */}
+                    <ul className="py-2">
+                      <li>
+                        <NavLink
+                          to="/profile"
+                          onClick={() => setDropdownOpen(false)}
+                          className={({ isActive }) =>
+                            `flex items-center gap-3 px-4 py-2 text-sm transition
+                          ${
+                            isActive
+                              ? "text-emerald-500 bg-emerald-100 dark:bg-emerald-900 font-semibold rounded-md"
+                              : "text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-gray-700"
+                          }`
+                          }
+                        >
+                          <FaUser className="text-emerald-500" />
+                          Profile
+                        </NavLink>
+                      </li>
+
+                      <li>
+                        <NavLink
+                          to="/myExports"
+                          onClick={() => setDropdownOpen(false)}
+                          className={({ isActive }) =>
+                            `flex items-center gap-3 px-4 py-2 text-sm transition
+                          ${
+                            isActive
+                              ? "text-emerald-500 bg-emerald-100 dark:bg-emerald-900 font-semibold rounded-md"
+                              : "text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-gray-700"
+                          }`
+                          }
+                        >
+                          <FaUser className="text-emerald-500" />
+                          My Products
+                        </NavLink>
+                      </li>
+
+                      <li>
+                        <NavLink
+                          to="/addProduct"
+                          onClick={() => setDropdownOpen(false)}
+                          className={({ isActive }) =>
+                            `flex items-center gap-3 px-4 py-2 text-sm transition
+                          ${
+                            isActive
+                              ? "text-emerald-500 bg-emerald-100 dark:bg-emerald-900 font-semibold rounded-md"
+                              : "text-gray-700 dark:text-gray-200 hover:bg-emerald-50 dark:hover:bg-gray-700"
+                          }`
+                          }
+                        >
+                          <FaUser className="text-emerald-500" />
+                          Add Product
+                        </NavLink>
+                      </li>
+                    </ul>
+
+                    {/* Logout */}
+                    <div className="border-t dark:border-gray-700">
+                      <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-gray-700 transition"
+                      >
+                        <FaSignOutAlt className="text-red-600" />
+                        Logout
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>

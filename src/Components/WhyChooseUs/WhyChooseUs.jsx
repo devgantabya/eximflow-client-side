@@ -27,7 +27,7 @@ const benefits = [
 const WhyChooseUs = () => {
   return (
     <section className="bg-gray-50 dark:bg-gray-900 py-16">
-      <div className="container mx-auto px-4 md:px-0">
+      <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 dark:text-gray-100">
             Why <span className="text-emerald-500">Choose Us</span>

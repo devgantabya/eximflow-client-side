@@ -2,7 +2,7 @@ import React from "react";
 
 const FeaturedCategories = () => {
   return (
-    <section className="py-16 px-4 md:px-0 container mx-auto">
+    <section className="py-16 px-4 container mx-auto">
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-10">
         Browse by <span className="text-emerald-500">Categories</span>
       </h2>

@@ -1,15 +1,15 @@
 import React, { useState, useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../contexts/AuthContext/AuthContext";
-import { ProductsContext } from "./../../contexts/ProductsContext/ProductsContext";
+import { ProductsContext } from "../../contexts/ProductsContext/ProductsContext";
 import { useLocation, useNavigate } from "react-router";
 
 const AddProduct = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const { addProduct } = useContext(ProductsContext);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -20,25 +20,17 @@ const AddProduct = () => {
     setLoading(true);
 
     const form = e.target;
-    const product_name = form.product_name.value;
-    const product_image = form.product_image.value;
-    const product_category = form.product_category.value;
-    const price = parseFloat(form.price.value);
-    const address = form.address.value;
-    const origin_country = form.origin_country.value;
-    const rating = parseFloat(form.rating.value);
-    const available_quantity = parseInt(form.available_quantity.value);
 
     const newProduct = {
-      product_name,
-      product_image,
-      price,
-      origin_country,
-      rating,
-      available_quantity,
+      product_name: form.product_name.value,
+      product_image: form.product_image.value,
+      product_category: form.product_category.value,
+      price: parseFloat(form.price.value),
+      address: form.address.value,
+      origin_country: form.origin_country.value,
+      rating: parseFloat(form.rating.value),
+      available_quantity: parseInt(form.available_quantity.value),
       exporter_email: user?.email,
-      product_category,
-      address,
     };
 
     try {
@@ -53,11 +45,11 @@ const AddProduct = () => {
 
       const data = await res.json();
 
-      if (data.success && data.productResult.insertedId) {
+      if (data?.success && data?.productResult?.insertedId) {
         toast.success("Product added successfully!");
         form.reset();
 
-        const productForUI = {
+        addProduct({
           _id: data.productResult.insertedId,
           title: newProduct.product_name,
           image: newProduct.product_image,
@@ -69,138 +61,78 @@ const AddProduct = () => {
           rating: newProduct.rating,
           available_quantity: newProduct.available_quantity,
           location: newProduct.address,
-        };
+        });
 
-        addProduct(productForUI);
         navigate("/myExports");
       } else {
-        toast.error("Failed to add product. Try again!");
+        toast.error("Failed to add product");
       }
     } catch (err) {
-      toast.error("Something went wrong!");
       console.error(err);
+      toast.error("Something went wrong!");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen py-10">
+    <div className="min-h-screen bg-white dark:bg-gray-900 py-10 px-4">
       <title>EximFlow - Add Product</title>
-      <div className="max-w-3xl mx-auto shadow-lg rounded-2xl p-8">
-        <h2 className="text-4xl font-bold text-center mb-2">
-          Add <span className="text-primary">Product</span>
+
+      <div className="max-w-3xl mx-auto bg-white dark:bg-gray-800 shadow-xl rounded-2xl p-6 sm:p-8">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-2 text-gray-800 dark:text-gray-100">
+          Add <span className="text-emerald-500">Product</span>
         </h2>
-        <p className="text-gray-600 text-center mb-6">
-          Fill out the form below to add a new product to your store.
+        <p className="text-center text-gray-600 dark:text-gray-400 mb-8">
+          Fill out the form below to add a new export product
         </p>
 
         <form onSubmit={handleAddProduct} className="space-y-5">
-          <div>
-            <label className="block font-medium mb-1">Product Name</label>
-            <input
-              type="text"
-              name="product_name"
-              placeholder="Havit N5086 HD webcam for sale"
-              required
-              className="w-full input border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
+          <Input
+            label="Product Name"
+            name="product_name"
+            placeholder="Havit HD Webcam"
+          />
+
+          <Input
+            label="Product Image URL"
+            name="product_image"
+            placeholder="https://image-url.com"
+          />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <Input type="number" step="0.01" label="Price ($)" name="price" />
+            <Input label="Category" name="product_category" />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <Input
+              type="number"
+              step="0.1"
+              min="0"
+              max="5"
+              label="Rating (0-5)"
+              name="rating"
+            />
+            <Input
+              type="number"
+              min="1"
+              label="Available Quantity"
+              name="available_quantity"
             />
           </div>
 
-          <div>
-            <label className="block font-medium mb-1">Product Image URL</label>
-            <input
-              type="text"
-              name="product_image"
-              placeholder="https://..."
-              required
-              className="w-full input border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
-            />
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-5">
-            <div>
-              <label className="block font-medium mb-1">Price</label>
-              <input
-                type="number"
-                name="price"
-                placeholder="$50"
-                required
-                step="0.01"
-                className="w-full border input border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
-
-            <div>
-              <label className="block font-medium mb-1">Category</label>
-              <input
-                type="text"
-                name="product_category"
-                placeholder="Type your product category"
-                required
-                className="w-full border input border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-5">
-            <div>
-              <label className="block font-medium mb-1">Rating</label>
-              <input
-                type="number"
-                name="rating"
-                placeholder="Range: 0 - 5"
-                required
-                step="0.1"
-                min="0"
-                max="5"
-                className="w-full input border  border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
-
-            <div>
-              <label className="block font-medium mb-1">
-                Available Quantity
-              </label>
-              <input
-                type="number"
-                name="available_quantity"
-                placeholder="100"
-                required
-                min="1"
-                className="w-full input border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
-          </div>
-          <div className="grid md:grid-cols-2 gap-5">
-            <div>
-              <label className="block font-medium mb-1">Location</label>
-              <input
-                type="text"
-                name="address"
-                placeholder="City"
-                required
-                step="0.01"
-                className="w-full input border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
-
-            <div>
-              <label className="block font-medium mb-1">Origin Country</label>
-              <input
-                type="text"
-                name="origin_country"
-                placeholder="Country"
-                required
-                className="w-full input border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <Input label="Location" name="address" placeholder="City" />
+            <Input label="Origin Country" name="origin_country" />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:opacity-90 transition"
+            className="w-full mt-4 py-3 rounded-lg font-semibold text-white 
+            bg-emerald-500 hover:bg-emerald-600 transition 
+            disabled:opacity-60"
           >
             {loading ? "Adding..." : "Add Product"}
           </button>
@@ -209,5 +141,23 @@ const AddProduct = () => {
     </div>
   );
 };
+
+/* 🔹 Reusable Input Component */
+const Input = ({ label, ...props }) => (
+  <div>
+    <label className="block mb-1 font-medium text-gray-700 dark:text-gray-300">
+      {label}
+    </label>
+    <input
+      {...props}
+      required
+      className="w-full rounded-lg p-3 
+      border border-gray-300 dark:border-gray-700
+      bg-white dark:bg-gray-900 
+      text-gray-800 dark:text-gray-200
+      focus:outline-none focus:ring-2 focus:ring-emerald-500"
+    />
+  </div>
+);
 
 export default AddProduct;

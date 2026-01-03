@@ -71,15 +71,19 @@ const MyImports = () => {
 
   if (imports.length === 0)
     return (
-      <div className="flex justify-center items-center min-h-screen bg-white dark:bg-gray-900 px-4">
+      <div className="text-center text-2xl text-gray-500 h-screen flex justify-center items-center bg-white dark:bg-gray-900 px-4">
         <div className="text-center">
           <title>EximFlow - No Imports</title>
-          <h2 className="text-3xl font-bold text-gray-700 dark:text-gray-300 mb-6">
+          <h2 className="text-center text-gray-800 dark:text-gray-200 mb-6 text-2xl">
             You have not imported any products yet
           </h2>
           <Link
             to="/allProducts"
-            className="bg-emerald-500 text-white px-6 py-2 rounded-lg hover:bg-emerald-600 transition"
+            className="px-8 py-3 rounded-full
+                          bg-emerald-500 text-white font-semibold
+                          hover:bg-emerald-600
+                          transition transform hover:scale-105
+                          shadow-lg text-lg"
           >
             Back To All Products
           </Link>

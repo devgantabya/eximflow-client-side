@@ -10,6 +10,8 @@ import MyImports from "../Pages/MyImports/MyImports";
 import AddProduct from "../Pages/AddProduct/AddProduct";
 import PrivateRoutes from "./PrivateRoutes";
 import NotFound from "./../Pages/NotFound/NotFound";
+import About from "../Pages/About/About";
+import Contact from "../Pages/Contact/Contact";
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +26,14 @@ export const router = createBrowserRouter([
       {
         path: "allProducts",
         Component: AllProducts,
+      },
+      {
+        path: "about-us",
+        Component: About,
+      },
+      {
+        path: "contact-us",
+        Component: Contact,
       },
       {
         path: "productDetails/:id",

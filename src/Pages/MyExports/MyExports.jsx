@@ -117,20 +117,30 @@ const MyExports = () => {
 
   if (loading)
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen bg-white dark:bg-gray-900">
         <Loader />
       </div>
     );
 
   if (exports.length === 0)
     return (
-      <div className="text-center text-2xl text-gray-500 h-screen flex justify-center items-center">
+      <div className="text-center text-2xl text-gray-500 h-screen flex justify-center items-center bg-white dark:bg-gray-900 px-4">
         <div>
           <title>EximFlow - Not Found Exports</title>
-          <h2 className="text-center text-gray-500 mb-6 text-3xl">
+          <h2 className="text-center text-gray-800 dark:text-gray-200 mb-6 text-2xl">
             You have not exported any products yet.
           </h2>
-          <Link className="btn btn-primary" to={"/addProduct"}>
+
+          <Link
+            to="/addProduct"
+            className="
+                          px-8 py-3 rounded-full
+                          bg-emerald-500 text-white font-semibold
+                          hover:bg-emerald-600
+                          transition transform hover:scale-105
+                          shadow-lg text-lg
+                        "
+          >
             Add Export
           </Link>
         </div>
@@ -138,19 +148,22 @@ const MyExports = () => {
     );
 
   return (
-    <div className="container mx-auto px-4 md:px-0 min-h-screen">
-      <div className="grid grid-cols-1 gap-6">
-        <div className="text-center py-10">
+    <div className="container mx-auto px-4 md:px-0 min-h-screen bg-white dark:bg-gray-900">
+      <div className="grid grid-cols-1 gap-6 py-10">
+        <div className="text-center">
           <title>EximFlow - My Exports</title>
-          <h1 className="text-4xl font-bold mb-2">
-            My <span className="text-primary">Exports</span>
+          <h1 className="text-4xl font-bold mb-2 text-gray-800 dark:text-gray-200">
+            My <span className="text-emerald-500">Exports</span>
           </h1>
-          <p className="text-gray-600">All exported products</p>
+          <p className="text-gray-600 dark:text-gray-400">
+            All exported products
+          </p>
         </div>
+
         <div className="overflow-x-auto">
           <table className="table w-full">
             <thead>
-              <tr className=" text-sm sm:text-base">
+              <tr className="text-sm sm:text-base">
                 <th>SL No.</th>
                 <th>Products</th>
                 <th className="hidden sm:table-cell">Origin Country</th>
@@ -163,7 +176,7 @@ const MyExports = () => {
               {exports.map((exp, index) => (
                 <tr
                   key={exp._id}
-                  className="border-b border-gray-100 text-sm sm:text-base"
+                  className="border-b border-gray-200 dark:border-gray-700 text-sm sm:text-base"
                 >
                   <th className="whitespace-nowrap">{index + 1}</th>
 
@@ -175,11 +188,15 @@ const MyExports = () => {
                         </div>
                       </div>
                       <div>
-                        <div className="font-semibold">{exp.product_name}</div>
+                        <div className="font-semibold text-gray-800 dark:text-gray-200">
+                          {exp.product_name}
+                        </div>
                         <div className="text-xs sm:text-sm gap-2 flex flex-wrap">
-                          <p className="md:opacity-50">${exp.price}</p>
+                          <p className="md:opacity-50 text-gray-600 dark:text-gray-400">
+                            ${exp.price}
+                          </p>
                           <div className="md:hidden">
-                            <p className="flex items-center gap-1">
+                            <p className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
                               <span className="text-yellow-500">
                                 <FaStar />
                               </span>
@@ -187,15 +204,15 @@ const MyExports = () => {
                             </p>
                           </div>
                           <div className="md:hidden">
-                            <p className="flex items-center gap-1">
-                              <span className="text-green-500">
+                            <p className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
+                              <span className="text-emerald-500">
                                 <IoBagCheck />
                               </span>
                               {exp.available_quantity}
                             </p>
                           </div>
                           <div className="md:hidden">
-                            <p className="flex items-center gap-1">
+                            <p className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
                               <span className="text-red-500">
                                 <FaMapMarkerAlt />
                               </span>
@@ -207,33 +224,31 @@ const MyExports = () => {
                     </div>
                   </td>
 
-                  <td className="hidden sm:table-cell whitespace-nowrap">
+                  <td className="hidden sm:table-cell whitespace-nowrap text-gray-600 dark:text-gray-400">
                     {exp.origin_country || "N/A"}
                   </td>
-                  <td className="hidden md:table-cell whitespace-nowrap">
-                    <div className="">
-                      <p className="flex items-center gap-1">
-                        <span className="text-yellow-500">
-                          <FaStar />
-                        </span>
-                        {exp.rating || "N/A"}
-                      </p>
+                  <td className="hidden md:table-cell whitespace-nowrap text-gray-600 dark:text-gray-400">
+                    <div className="flex items-center gap-1">
+                      <span className="text-yellow-500">
+                        <FaStar />
+                      </span>
+                      {exp.rating || "N/A"}
                     </div>
                   </td>
-                  <td className="hidden md:table-cell whitespace-nowrap">
+                  <td className="hidden md:table-cell whitespace-nowrap text-gray-600 dark:text-gray-400">
                     {exp.available_quantity}
                   </td>
 
                   <th className="flex flex-col lg:flex-row gap-2 mt-2 sm:mt-0">
                     <button
                       onClick={() => handleEdit(exp)}
-                      className="bg-primary/90 text-white px-3 py-1 rounded hover:bg-primary w-full sm:w-auto"
+                      className="bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-1 rounded w-full sm:w-auto transition"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDelete(exp._id)}
-                      className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 w-full sm:w-auto"
+                      className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded w-full sm:w-auto transition"
                     >
                       Delete
                     </button>
@@ -244,78 +259,45 @@ const MyExports = () => {
           </table>
         </div>
       </div>
+
+      {/* Modal */}
       <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg mb-4">
+        <div className="modal-box bg-white dark:bg-gray-800">
+          <h3 className="font-bold text-lg mb-4 text-gray-800 dark:text-gray-200">
             Update Product - {selectedExport?.product_name}
           </h3>
 
           {selectedExport && (
             <form onSubmit={handleUpdate} className="space-y-3">
-              <input
-                type="text"
-                name="product_name"
-                defaultValue={selectedExport.product_name}
-                className="border border-gray-300 rounded-lg w-full p-2"
-                required
-              />
-              <input
-                type="text"
-                name="product_image"
-                defaultValue={selectedExport.product_image}
-                className="border border-gray-300 rounded-lg w-full p-2"
-                required
-              />
-              <input
-                type="number"
-                name="price"
-                defaultValue={selectedExport.price}
-                className="border border-gray-300 rounded-lg w-full p-2"
-                required
-              />
-              <input
-                type="text"
-                name="product_category"
-                defaultValue={selectedExport.product_category}
-                className="border border-gray-300 rounded-lg w-full p-2"
-                required
-              />
-              <input
-                type="text"
-                name="address"
-                defaultValue={selectedExport.address}
-                className="border border-gray-300 rounded-lg w-full p-2"
-                required
-              />
-              <input
-                type="text"
-                name="origin_country"
-                defaultValue={selectedExport.origin_country}
-                className="border border-gray-300 rounded-lg w-full p-2"
-                required
-              />
-              <input
-                type="number"
-                step="0.1"
-                min="0"
-                max="5"
-                name="rating"
-                defaultValue={selectedExport.rating}
-                className="border border-gray-300 rounded-lg w-full p-2"
-                required
-              />
-              <input
-                type="number"
-                name="available_quantity"
-                defaultValue={selectedExport.available_quantity}
-                className="border border-gray-300 rounded-lg w-full p-2"
-                required
-              />
+              {[
+                { name: "product_name", type: "text" },
+                { name: "product_image", type: "text" },
+                { name: "product_category", type: "text" },
+                { name: "price", type: "number" },
+                { name: "address", type: "text" },
+                { name: "origin_country", type: "text" },
+                { name: "rating", type: "number", step: 0.1, min: 0, max: 5 },
+                { name: "available_quantity", type: "number" },
+              ].map((field) => (
+                <input
+                  key={field.name}
+                  type={field.type}
+                  name={field.name}
+                  step={field.step}
+                  min={field.min}
+                  max={field.max}
+                  defaultValue={selectedExport[field.name]}
+                  className="border border-gray-300 dark:border-gray-700 rounded-lg w-full p-2 
+bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 
+focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  required
+                />
+              ))}
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:opacity-90 transition"
+                className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-3 rounded-lg font-semibold transition"
               >
                 {loading ? "Updating..." : "Update"}
               </button>
