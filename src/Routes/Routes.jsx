@@ -12,6 +12,7 @@ import PrivateRoutes from "./PrivateRoutes";
 import NotFound from "./../Pages/NotFound/NotFound";
 import About from "../Pages/About/About";
 import Contact from "../Pages/Contact/Contact";
+import Profile from "../Pages/Profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -72,6 +73,14 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoutes>
             <AddProduct></AddProduct>
+          </PrivateRoutes>
+        ),
+      },
+      {
+        path: "profile",
+        element: (
+          <PrivateRoutes>
+            <Profile></Profile>
           </PrivateRoutes>
         ),
       },
