@@ -9,24 +9,37 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(loadedProduct || null);
   const { user } = useContext(AuthContext);
   const importModalRef = useRef(null);
+  const loginModalRef = useRef(null);
   const [importQty, setImportQty] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
 
-  const navigate = useNavigate();
+    const openAfterLogin = localStorage.getItem("openImportModalAfterLogin");
+    if (openAfterLogin && user) {
+      importModalRef.current.showModal();
+      localStorage.removeItem("openImportModalAfterLogin");
+    }
+  }, [user]);
 
-  const handleImportModalOpen = () => {
-    importModalRef.current.showModal();
+  const handleImportClick = () => {
+    if (!user) {
+      localStorage.setItem("redirectAfterLogin", window.location.pathname);
+      localStorage.setItem("openImportModalAfterLogin", "true");
+      loginModalRef.current.showModal();
+    } else {
+      importModalRef.current.showModal();
+    }
   };
 
   const handleImportSubmit = async (e) => {
     e.preventDefault();
+    if (!user) return toast.error("Login required to import products");
 
     const qty = parseInt(importQty);
-    if (!qty || qty <= 0) return toast.error("Please enter a valid quantity");
+    if (!qty || qty <= 0) return toast.error("Enter a valid quantity");
     if (qty > product.available_quantity)
       return toast.warning("Cannot import more than available quantity");
 
@@ -35,11 +48,7 @@ const ProductDetails = () => {
     try {
       const checkRes = await fetch(
         `https://eximflow-api-server.vercel.app/myImports?email=${user.email}`,
-        {
-          headers: {
-            authorization: `Bearer ${user.accessToken}`,
-          },
-        }
+        { headers: { authorization: `Bearer ${user.accessToken}` } }
       );
       const userImports = await checkRes.json();
       const existingImport = userImports.find(
@@ -69,8 +78,8 @@ const ProductDetails = () => {
           rating: product.rating,
           origin_country: product.origin_country,
           imported_quantity: qty,
-          importer_email: user?.email,
-          importer_name: user?.displayName,
+          importer_email: user.email,
+          importer_name: user.displayName,
           imported_at: new Date(),
         };
         const res = await fetch(
@@ -116,23 +125,26 @@ const ProductDetails = () => {
 
   if (!product)
     return (
-      <main className="grow flex justify-center items-center bg-linear-to-r from-blue-100 to-blue-50 px-4 py-12 md:py-20">
-        <title>EximFlow - Not found this product</title>
+      <main className="grow flex justify-center items-center bg-gradient-to-r from-blue-100 to-blue-50 dark:from-gray-800 dark:to-gray-900 px-4 py-12 md:py-20">
+        <title>EximFlow - Product Not Found</title>
         <div className="text-center">
           <img
             src={productNotFoundImg}
             alt="404 - Product Not Found"
             className="mx-auto max-w-sm w-full"
           />
-          <div className="text-center py-10">
-            <h1 className="text-4xl font-bold text-gray-800 mb-2">
-              Oops, product <span className="text-primary">not found!</span>
+          <div className="py-10">
+            <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-200 mb-2">
+              Oops, product <span className="text-emerald-500">not found!</span>
             </h1>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-400">
               We could not find the product you requested.
             </p>
           </div>
-          <Link to="/allProducts" className="btn btn-primary btn-sm md:btn-md">
+          <Link
+            to="/allProducts"
+            className="btn bg-emerald-500 text-white hover:bg-emerald-600"
+          >
             Back To Store
           </Link>
         </div>
@@ -143,7 +155,7 @@ const ProductDetails = () => {
     <div className="container mx-auto my-10 px-4 md:px-0">
       <title>{`EximFlow - ${product.title}`}</title>
       <div className="grid md:grid-cols-2 gap-10 items-center">
-        <div className="">
+        <div>
           <img
             src={product.image}
             alt={product.title}
@@ -152,34 +164,37 @@ const ProductDetails = () => {
         </div>
         <div>
           <h1 className="text-4xl font-bold mb-2">{product.title}</h1>
-          <p className="text-gray-600 mb-3">
-            <span className="font-semibold">Category:</span> {product.category}
+          <p className="text-gray-600 dark:text-gray-300 mb-2">
+            <span className="font-semibold">Category:</span>{" "}
+            {product.category || "N/A"}
           </p>
-          <p className="text-gray-600 mb-3">
-            <span className="font-semibold">Seller Email:</span> {product.email}
+          <p className="text-gray-600 dark:text-gray-300 mb-2">
+            <span className="font-semibold">Seller Email:</span>{" "}
+            {product.email || "N/A"}
           </p>
-          <p className="text-gray-600 mb-3">
+          <p className="text-gray-600 dark:text-gray-300 mb-2">
             <span className="font-semibold">Origin Country:</span>{" "}
-            {product.origin_country}
+            {product.origin_country || "N/A"}
           </p>
-          <p className="text-gray-600 mb-3">
-            <span className="font-semibold">Location:</span> {product.location}
+          <p className="text-gray-600 dark:text-gray-300 mb-2">
+            <span className="font-semibold">Location:</span>{" "}
+            {product.location || "N/A"}
           </p>
-          <p className="text-gray-600 mb-3">
+          <p className="text-gray-600 dark:text-gray-300 mb-2">
             <span className="font-semibold">Rating:</span> ⭐{" "}
             {product.rating || "N/A"}
           </p>
-          <p className="text-gray-600 mb-3">
+          <p className="text-gray-600 dark:text-gray-300 mb-2">
             <span className="font-semibold">Available Quantity:</span>{" "}
-            {product.available_quantity}
+            {product.available_quantity || 0}
           </p>
-          <p className="text-gray-800 text-lg font-semibold mb-4">
-            Price: ${product.price}
+          <p className="text-gray-800 dark:text-gray-100 text-lg font-semibold mb-4">
+            Price: ${product.price || 0}
           </p>
 
           <button
-            onClick={handleImportModalOpen}
-            className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/80"
+            onClick={handleImportClick}
+            className="bg-emerald-500 text-white px-6 py-2 rounded-lg hover:bg-emerald-600 transition-all duration-200"
             disabled={product.available_quantity === 0}
           >
             {product.available_quantity === 0 ? "Out of Stock" : "Import Now"}
@@ -187,6 +202,31 @@ const ProductDetails = () => {
         </div>
       </div>
 
+      <dialog
+        ref={loginModalRef}
+        className="modal modal-bottom sm:modal-middle"
+      >
+        <div className="modal-box">
+          <h3 className="font-bold text-lg mb-4">Login Required</h3>
+          <p className="text-gray-700 dark:text-gray-300 mb-4">
+            You must{" "}
+            <Link to="/login" className="text-emerald-500 underline">
+              login
+            </Link>{" "}
+            to import this product.
+          </p>
+          <div className="modal-action">
+            <button
+              className="btn btn-outline"
+              onClick={() => loginModalRef.current.close()}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </dialog>
+
+      {/* Import Modal (for logged in users) */}
       <dialog
         ref={importModalRef}
         className="modal modal-bottom sm:modal-middle"
@@ -200,30 +240,30 @@ const ProductDetails = () => {
               <label className="block font-semibold mb-2">Importer Name</label>
               <input
                 type="text"
-                defaultValue={user.displayName}
+                defaultValue={user?.displayName}
                 readOnly
                 disabled
-                className="border border-gray-300 rounded-lg w-full p-2 bg-gray-300 focus:outline-0 mb-4"
+                className="border border-gray-300 rounded-lg w-full p-2 bg-gray-300 dark:bg-gray-700 focus:outline-0 mb-4"
               />
               <label className="block font-semibold mb-2">Importer Email</label>
               <input
                 type="email"
-                defaultValue={user.email}
+                defaultValue={user?.email}
                 readOnly
                 disabled
-                className="border border-gray-300 rounded-lg w-full p-2 bg-gray-300 focus:outline-0 mb-4"
+                className="border border-gray-300 rounded-lg w-full p-2 bg-gray-300 dark:bg-gray-700 focus:outline-0 mb-4"
               />
               <label className="block font-semibold mb-2">Quantity</label>
               <input
                 type="number"
                 value={importQty}
                 onChange={(e) => setImportQty(e.target.value)}
-                className="border border-gray-300 rounded-lg w-full p-2 focus:outline-2 focus:outline-primary"
+                className="border border-gray-300 rounded-lg w-full p-2 focus:outline-2 focus:outline-emerald-500"
                 placeholder="Enter quantity"
                 min={1}
                 max={product.available_quantity}
               />
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                 Available: {product.available_quantity}
               </p>
             </div>
@@ -235,17 +275,19 @@ const ProductDetails = () => {
               className={`w-full py-2 rounded-lg text-white ${
                 importQty > product.available_quantity || loading || !importQty
                   ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-primary hover:bg-primary/80"
+                  : "bg-emerald-500 hover:bg-emerald-600"
               }`}
             >
               {loading ? "Importing..." : "Import"}
             </button>
           </form>
-
           <div className="modal-action">
-            <form method="dialog">
-              <button className="btn">Cancel</button>
-            </form>
+            <button
+              className="btn btn-outline"
+              onClick={() => importModalRef.current.close()}
+            >
+              Cancel
+            </button>
           </div>
         </div>
       </dialog>

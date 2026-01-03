@@ -1,5 +1,5 @@
 import React, { useState, use } from "react";
-import { Link, useNavigate, useLocation } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { AuthContext } from "../contexts/AuthContext/AuthContext";
@@ -7,13 +7,17 @@ import { AuthContext } from "../contexts/AuthContext/AuthContext";
 const Login = () => {
   const { signInUser, signInWithGoogle } = use(AuthContext);
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleLoginSuccess = () => {
+    const redirectPath = localStorage.getItem("redirectAfterLogin") || "/";
+    localStorage.removeItem("redirectAfterLogin");
+    navigate(redirectPath, { replace: true });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,7 +32,7 @@ const Login = () => {
     signInUser(email, password)
       .then(() => {
         toast.success("Login successful!");
-        navigate(from, { replace: true });
+        handleLoginSuccess();
       })
       .catch((err) => toast.error(err.message || "Login failed"))
       .finally(() => setLoading(false));
@@ -51,7 +55,7 @@ const Login = () => {
       })
       .then(() => {
         toast.success("Login successful!");
-        navigate(from, { replace: true });
+        handleLoginSuccess();
       })
       .catch((err) => toast.error(err.message || "Google login failed"));
   };

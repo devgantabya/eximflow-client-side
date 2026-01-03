@@ -12,7 +12,6 @@ const Navbar = () => {
   const menuRef = useRef();
   const dropdownRef = useRef();
 
-  /* ------------------ Outside Click Close ------------------ */
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -36,7 +35,6 @@ const Navbar = () => {
     }
   };
 
-  /* ------------------ Nav Links ------------------ */
   const navItemClass = ({ isActive }) =>
     `px-3 py-2 text-base font-medium transition-all duration-200 
      ${
@@ -87,7 +85,6 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-md">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
-          {/* ---------------- Logo ---------------- */}
           <div className="flex items-center gap-2">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -105,10 +102,8 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* ---------------- Desktop Menu ---------------- */}
           <ul className="hidden lg:flex items-center gap-6">{links}</ul>
 
-          {/* ---------------- Right Side ---------------- */}
           <div className="flex items-center gap-3">
             {user ? (
               <div ref={dropdownRef} className="relative">
@@ -144,7 +139,11 @@ const Navbar = () => {
             ) : (
               <Link
                 to="/login"
-                className="px-5 py-2 rounded-full bg-emerald-500 text-white font-medium hover:bg-emerald-500/90 transition"
+                className="px-8 py-2 rounded-full
+                bg-emerald-500 text-white font-semibold
+                hover:bg-emerald-600
+                transition transform hover:scale-105
+                shadow-lg"
               >
                 Login
               </Link>
@@ -153,7 +152,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* ---------------- Mobile Menu ---------------- */}
       {menuOpen && (
         <ul
           ref={menuRef}

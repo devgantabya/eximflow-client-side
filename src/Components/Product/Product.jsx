@@ -16,48 +16,83 @@ const Product = ({ product }) => {
   } = product;
 
   return (
-    <div className="card bg-white shadow-sm transition-all duration-300 border border-gray-100">
-      <figure className="relative overflow-hidden rounded-t-lg h-[200px]">
-        <div className="w-full transform transition-transform duration-60  hover:scale-110">
-          <img
-            src={image}
-            alt={title}
-            className="w-1/2 h-full object-cover rounded-t-lg mx-auto p-2"
-          />
-        </div>
-        <div className="absolute top-3 right-3 bg-teal-50 shadow px-2 py-1 rounded-md text-base font-semibold flex items-center gap-1">
-          <span className="text-yellow-500">
-            <FaStar size={16} />
+    <div
+      className="
+        card
+        bg-white dark:bg-gray-900
+        border border-gray-100 dark:border-gray-800
+        shadow-sm hover:shadow-md
+        transition-all duration-300
+        rounded-xl
+      "
+    >
+      {/* Image */}
+      <figure className="relative overflow-hidden rounded-t-xl h-[200px] bg-gray-50 dark:bg-gray-800">
+        <img
+          src={image}
+          alt={title}
+          className="
+            w-full h-full object-contain
+            p-4
+            transition-transform duration-300
+            hover:scale-105
+          "
+        />
+
+        {/* Rating Badge */}
+        <div
+          className="
+            absolute top-3 right-3
+            bg-white dark:bg-gray-900
+            shadow px-2 py-1 rounded-md
+            text-sm font-semibold
+            flex items-center gap-1
+          "
+        >
+          <FaStar size={14} className="text-yellow-500" />
+          <span className="text-gray-800 dark:text-gray-200">
+            {rating || "N/A"}
           </span>
-          <span className="text-gray-900">{rating || "N/A"}</span>
         </div>
       </figure>
 
-      <div className="card-body px-5 py-4 bg-teal-50 rounded-b-lg">
-        <h2 className="card-title text-xl font-semibold dark:text-gray-200 text-gray-800 line-clamp-1">
+      {/* Content */}
+      <div className="card-body px-5 py-4 rounded-b-xl">
+        <h2
+          className="
+            text-lg font-semibold
+            text-gray-800 dark:text-gray-100
+            line-clamp-1
+          "
+        >
           {title}
         </h2>
 
-        <div className="text-sm text-gray-600 space-y-1">
-          <p className="text-xl font-semibold text-gray-700 mb-2">${price}</p>
-          <p title="Origin Country" className="flex gap-1 items-center">
-            <span className="font-medium text-gray-700">
-              <CiLocationOn size={18} />
-            </span>
+        <div className="mt-2 space-y-1 text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-xl font-bold text-emerald-500">${price}</p>
+
+          <p className="flex items-center gap-1">
+            <CiLocationOn size={18} className="text-emerald-500" />
             {origin_country || "Unknown"}
           </p>
-          <p className="flex gap-1 items-center">
-            <span className="font-medium text-gray-700">
-              <GoPackage />
-            </span>
+
+          <p className="flex items-center gap-1">
+            <GoPackage className="text-emerald-500" />
             {available_quantity || 0} pcs in stock
           </p>
         </div>
 
+        {/* CTA */}
         <div className="card-actions mt-4">
           <Link
             to={`/productDetails/${_id}`}
-            className="btn btn-primary w-full rounded-lg font-semibold"
+            className="
+              w-full text-center
+              bg-emerald-500 hover:bg-emerald-600
+              text-white font-semibold
+              py-2 rounded-lg
+              transition-colors duration-200
+            "
           >
             See Details
           </Link>
