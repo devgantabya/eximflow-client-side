@@ -12,7 +12,6 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -31,12 +30,8 @@ const Login = () => {
         toast.success("Login successful!");
         navigate(from, { replace: true });
       })
-      .catch((err) => {
-        toast.error(err.message || "Login failed");
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      .catch((err) => toast.error(err.message || "Login failed"))
+      .finally(() => setLoading(false));
   };
 
   const handleGoogleLogin = () => {
@@ -50,49 +45,60 @@ const Login = () => {
 
         return fetch("https://eximflow-api-server.vercel.app/users", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newUser),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log("User saved:", data);
-            toast.success("Login successful!");
-            navigate(from, { replace: true });
-          });
+        });
       })
-      .catch((err) => {
-        console.error("Google login error:", err);
-        toast.error(err.message || "Google login failed");
-      });
+      .then(() => {
+        toast.success("Login successful!");
+        navigate(from, { replace: true });
+      })
+      .catch((err) => toast.error(err.message || "Google login failed"));
   };
 
   return (
-    <div className="md:min-h-screen flex items-center justify-center bg-linear-to-r from-blue-100 to-blue-50 py-4 md:py-10 px-4 md:px-0">
-      <div className="card w-full max-w-md md:shadow-2xl bg-base-100 p-8 rounded-xl">
-        <h2 className="text-3xl font-bold text-center text-primary mb-6">
-          Login to EximFlow
+    <div
+      className="
+      min-h-screen flex items-center justify-center px-4
+      bg-linear-to-br from-emerald-50 to-white
+      dark:from-gray-900 dark:to-gray-950
+    "
+    >
+      <div
+        className="
+        w-full max-w-md rounded-2xl p-8
+        bg-white dark:bg-gray-900
+        shadow-xl dark:shadow-black/40
+      "
+      >
+        <h2 className="text-3xl font-extrabold text-center text-emerald-500 mb-6">
+          Welcome back
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="relative">
-            <label className="label">
-              <span className="label-text font-medium">Email</span>
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+              Email
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="input input-bordered w-full pr-12 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+              className="
+                w-full rounded-lg px-4 py-2.5
+                bg-white dark:bg-gray-800
+                border border-gray-300 dark:border-gray-700
+                text-gray-800 dark:text-gray-100 focus:outline-none
+                focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500
+              "
               required
             />
           </div>
 
-          <div className="relative">
-            <label className="label">
-              <span className="label-text font-medium">Password</span>
+          <div>
+            <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+              Password
             </label>
 
             <div className="relative">
@@ -101,16 +107,26 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
-                className="input input-bordered w-full pr-12 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+                className="
+                  w-full rounded-lg px-4 py-2.5 pr-12
+                  bg-white dark:bg-gray-800
+                  border border-gray-300 dark:border-gray-700
+                  text-gray-800 dark:text-gray-100 focus:outline-none
+                  focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500
+                "
                 required
               />
 
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-primary z-10"
+                className="
+                  absolute right-3 top-1/2 -translate-y-1/2
+                  text-gray-500 dark:text-gray-400
+                  hover:text-emerald-500
+                "
               >
-                {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
           </div>
@@ -118,59 +134,60 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`btn w-full flex items-center justify-center gap-2 text-base font-semibold transition-all duration-300 ${
-              loading
-                ? "bg-primary/70 text-white cursor-not-allowed"
-                : "btn-primary"
-            }`}
+            className="
+              w-full flex items-center justify-center gap-2
+              rounded-lg py-2.5 font-semibold text-white
+              bg-emerald-500 hover:bg-emerald-600
+              transition disabled:opacity-70
+            "
           >
-            {loading && (
-              <span className="loading loading-spinner loading-sm text-white"></span>
-            )}
+            {loading && <span className="loading loading-spinner loading-sm" />}
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
-        <div className="divider my-4">OR</div>
+        <div className="my-6 text-center text-sm text-gray-500 dark:text-gray-400">
+          OR
+        </div>
+
         <button
           onClick={handleGoogleLogin}
-          className="btn bg-white text-black border-[#e5e5e5]"
+          className="
+            w-full flex items-center justify-center gap-3
+            rounded-lg py-2.5 font-medium
+            border border-gray-300 dark:border-gray-700
+            bg-white dark:bg-gray-800
+            text-gray-800 dark:text-gray-200
+            hover:bg-gray-100 dark:hover:bg-gray-700
+            transition
+          "
         >
-          <svg
-            aria-label="Google logo"
-            width="16"
-            height="16"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
-          >
-            <g>
-              <path d="m0 0H512V512H0" fill="#fff"></path>
-              <path
-                fill="#34a853"
-                d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"
-              ></path>
-              <path
-                fill="#4285f4"
-                d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"
-              ></path>
-              <path
-                fill="#fbbc02"
-                d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"
-              ></path>
-              <path
-                fill="#ea4335"
-                d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"
-              ></path>
-            </g>
+          <svg width="16" height="16" viewBox="0 0 512 512">
+            <path
+              fill="#34a853"
+              d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"
+            />
+            <path
+              fill="#4285f4"
+              d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"
+            />
+            <path
+              fill="#fbbc02"
+              d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"
+            />
+            <path
+              fill="#ea4335"
+              d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"
+            />
           </svg>
           Login with Google
         </button>
 
-        <p className="text-center mt-5 text-sm">
+        <p className="mt-5 text-center text-sm text-gray-600 dark:text-gray-400">
           Don't have an account?{" "}
           <Link
             to="/register"
-            className="text-primary font-semibold hover:underline"
+            className="text-emerald-500 font-semibold hover:underline"
           >
             Register
           </Link>
